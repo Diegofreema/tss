@@ -31,7 +31,7 @@ export const LoginForm = () => {
     reset();
   };
   return (
-    <Stack mt={20} gap={10}>
+    <Stack mt={20} gap={15}>
       <CustomInput
         control={control}
         errors={errors}
