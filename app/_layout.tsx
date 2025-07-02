@@ -3,8 +3,18 @@ import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
-
+import * as SplashScreen from 'expo-splash-screen';
 import { useColorScheme } from '@/hooks/useColorScheme';
+import {useEffect} from "react";
+
+
+SplashScreen.preventAutoHideAsync();
+
+// Set the animation options. This is optional.
+SplashScreen.setOptions({
+    duration: 1000,
+    fade: true,
+});
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
@@ -12,6 +22,12 @@ export default function RootLayout() {
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
   });
 
+
+    useEffect(() => {
+        if(loaded) {
+          void SplashScreen.hideAsync()
+        }
+    }, [loaded]);
   if (!loaded) {
     // Async font loading only occurs in development.
     return null;
