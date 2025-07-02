@@ -1,19 +1,22 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
+import { useColorScheme } from '@/hooks/useColorScheme';
+import {
+  DarkTheme,
+  DefaultTheme,
+  ThemeProvider,
+} from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import 'react-native-reanimated';
 import * as SplashScreen from 'expo-splash-screen';
-import { useColorScheme } from '@/hooks/useColorScheme';
-import {useEffect} from "react";
-
+import { StatusBar } from 'expo-status-bar';
+import { useEffect } from 'react';
+import 'react-native-reanimated';
 
 SplashScreen.preventAutoHideAsync();
 
 // Set the animation options. This is optional.
 SplashScreen.setOptions({
-    duration: 1000,
-    fade: true,
+  duration: 1000,
+  fade: true,
 });
 
 export default function RootLayout() {
@@ -25,29 +28,25 @@ export default function RootLayout() {
     PublicSansRegular: require('../assets/fonts/PublicSans-Regular.ttf'),
   });
 
-
-    useEffect(() => {
-        if(loaded) {
-          void SplashScreen.hideAsync()
-        }
-    }, [loaded]);
+  useEffect(() => {
+    if (loaded) {
+      void SplashScreen.hideAsync();
+    }
+  }, [loaded]);
   if (!loaded) {
     // Async font loading only occurs in development.
     return null;
   }
-const isLoggedIn = false
+  const isLoggedIn = true;
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack>
-          <Stack.Protected guard={isLoggedIn}>
-
-        <Stack.Screen name="(protected)" options={{ headerShown: false }} />
-          </Stack.Protected>
-          <Stack.Protected guard={!isLoggedIn}>
-        <Stack.Screen name="(public)" options={{ headerShown: false }} />
-
-          </Stack.Protected>
-
+        <Stack.Protected guard={isLoggedIn}>
+          <Stack.Screen name="(protected)" options={{ headerShown: false }} />
+        </Stack.Protected>
+        <Stack.Protected guard={!isLoggedIn}>
+          <Stack.Screen name="(public)" options={{ headerShown: false }} />
+        </Stack.Protected>
       </Stack>
       <StatusBar style="auto" />
     </ThemeProvider>

@@ -22,3 +22,15 @@ export const forgotPasswordSchema = z.object({
     .min(1, { message: 'Please enter your email' })
     .email({ message: 'Please enter a valid email address' }),
 });
+
+export const newPasswordSchema = z
+  .object({
+    password: z.string().min(8, {
+      message: 'Password must be at least 8 characters.',
+    }),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: 'Passwords do not match',
+    path: ['confirmPassword'],
+  });

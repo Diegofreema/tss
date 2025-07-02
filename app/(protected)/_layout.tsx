@@ -1,12 +1,11 @@
-import {SafeAreaView} from "react-native-safe-area-context";
-import {Stack} from "expo-router";
-
+import { Stack } from 'expo-router';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const ProtectedLayout = () => {
-    return (
-       <SafeAreaView>
-           <Stack screenOptions={{headerShown: false}} />
-       </SafeAreaView>
-    );
+  return (
+    <SafeAreaView style={{ flex: 1 }}>
+      <Stack screenOptions={{ headerShown: false }} />
+    </SafeAreaView>
+  );
 };
 export default ProtectedLayout;
