@@ -3,10 +3,14 @@ import {Wrapper} from "@/features/shared/components/ui/wrapper";
 import {Image} from "expo-image";
 import {FloatingGradient} from "@/features/shared/components/ui/floating-gradient";
 import {Button} from "@/features/shared/components/ui/button";
+import {useRouter} from "expo-router";
 
 const {height} = Dimensions.get('window');
 const OnboardScreen = () => {
-    const onPress = () => {}
+    const router = useRouter()
+    const onPress = () => {
+            router.replace('/login')
+    }
     return (
         <Wrapper>
             <View style={styles.imageContainer}>
@@ -17,7 +21,7 @@ const OnboardScreen = () => {
                 />
                 <FloatingGradient />
             </View>
-            <Button title={'Get Started'} onPress={onPress} />
+            <Button title={'Get Started'}  onPress={onPress} />
 
         </Wrapper>
     );
@@ -28,8 +32,7 @@ export default OnboardScreen;
 const styles = StyleSheet.create({
     imageContainer: {
         height: height * .8,
-        // marginTop: height * 0.1,
-        marginHorizontal: 20,
+        marginHorizontal: 40,
 
     },
     image: {

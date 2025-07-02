@@ -3,7 +3,9 @@ import {StyleSheet} from "react-native";
 
 export const colors = {
     white: '#fff',
-    purple: '#383D8A'
+    purple: '#383D8A',
+    grey: '#DEDEDE',
+    black: '#000',
 }
 
 export const constantStyles = StyleSheet.create({
