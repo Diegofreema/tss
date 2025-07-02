@@ -27,6 +27,7 @@ type Props = TextInputProps & {
   type?: KeyboardTypeOptions;
   onEditFinish?: () => void;
   containerStyle?: StyleProp<ViewStyle>;
+  leftIcon?: React.ReactNode;
 };
 export const CustomInput = ({
   label,
@@ -40,6 +41,7 @@ export const CustomInput = ({
   type = 'default',
   onEditFinish,
   containerStyle,
+  leftIcon,
   ...rest
 }: Props) => {
   const onPress = () => {
@@ -57,6 +59,7 @@ export const CustomInput = ({
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       >
         <View style={[styles.inputContainer, containerStyle]}>
+          {leftIcon && <View style={{ marginRight: 5 }}>{leftIcon}</View>}
           <Controller
             control={control}
             render={({ field: { onBlur, value, onChange } }) => (
@@ -71,7 +74,7 @@ export const CustomInput = ({
                   },
                   rest.style,
                 ]}
-                placeholderTextColor={colors.grey}
+                placeholderTextColor={colors.placeholderGrey}
                 secureTextEntry={secureTextEntry}
                 onBlur={onBlur}
                 value={value}

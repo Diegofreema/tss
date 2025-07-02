@@ -1,6 +1,10 @@
+import { NormalText } from '@/features/shared/components/typography';
 import { Button } from '@/features/shared/components/ui/button';
 import { Stack } from '@/features/shared/components/ui/stack';
+import { colors } from '@/features/shared/constants';
+import { Feather } from '@expo/vector-icons';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Link } from 'expo-router';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -27,7 +31,7 @@ export const LoginForm = () => {
     reset();
   };
   return (
-    <Stack mt={20} gap={5}>
+    <Stack mt={20} gap={10}>
       <CustomInput
         control={control}
         errors={errors}
@@ -35,6 +39,9 @@ export const LoginForm = () => {
         placeholder="Johndoe@gmail.com"
         label="Email"
         type="email-address"
+        leftIcon={
+          <Feather name="mail" color={colors.placeholderGrey} size={20} />
+        }
       />
       <CustomInput
         control={control}
@@ -46,7 +53,15 @@ export const LoginForm = () => {
         secureTextEntry={secure}
         toggleSecure={toggleSecure}
         autoCapitalize="none"
+        leftIcon={
+          <Feather name="lock" color={colors.placeholderGrey} size={20} />
+        }
       />
+      <Link asChild href={'/forgot'}>
+        <NormalText style={{ color: colors.purple, alignSelf: 'flex-end' }}>
+          Forgot password
+        </NormalText>
+      </Link>
       <Button
         title={'Login'}
         onPress={handleSubmit(onSubmit)}
