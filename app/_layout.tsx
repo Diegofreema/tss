@@ -20,6 +20,9 @@ export default function RootLayout() {
   const colorScheme = useColorScheme();
   const [loaded] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+    PublicSansBold: require('../assets/fonts/PublicSans-Bold.ttf'),
+    PublicSansMedium: require('../assets/fonts/PublicSans-Medium.ttf'),
+    PublicSansRegular: require('../assets/fonts/PublicSans-Regular.ttf'),
   });
 
 
