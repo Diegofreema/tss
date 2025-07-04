@@ -1,3 +1,5 @@
+import { ToastProviderWithViewport } from '@/components/toast';
+import { useAuth } from '@/features/shared/store/use-auth';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import NetInfo from '@react-native-community/netinfo';
 import {
@@ -32,6 +34,7 @@ SplashScreen.setOptions({
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
+  const { user } = useAuth();
   const [loaded] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
     PublicSansBold: require('../assets/fonts/PublicSans-Bold.ttf'),
@@ -48,18 +51,23 @@ export default function RootLayout() {
     // Async font loading only occurs in development.
     return null;
   }
-  const isLoggedIn = true;
+  const isLoggedIn = !!user;
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <QueryClientProvider client={queryClient}>
-        <Stack>
-          <Stack.Protected guard={isLoggedIn}>
-            <Stack.Screen name="(protected)" options={{ headerShown: false }} />
-          </Stack.Protected>
-          <Stack.Protected guard={!isLoggedIn}>
-            <Stack.Screen name="(public)" options={{ headerShown: false }} />
-          </Stack.Protected>
-        </Stack>
+        <ToastProviderWithViewport>
+          <Stack>
+            <Stack.Protected guard={isLoggedIn}>
+              <Stack.Screen
+                name="(protected)"
+                options={{ headerShown: false }}
+              />
+            </Stack.Protected>
+            <Stack.Protected guard={!isLoggedIn}>
+              <Stack.Screen name="(public)" options={{ headerShown: false }} />
+            </Stack.Protected>
+          </Stack>
+        </ToastProviderWithViewport>
       </QueryClientProvider>
       <StatusBar style="auto" />
     </ThemeProvider>

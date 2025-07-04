@@ -15,3 +15,5 @@ export const constantStyles = StyleSheet.create({
     paddingHorizontal: 15,
   },
 });
+
+export const baseUrl = process.env.EXPO_PUBLIC_BASE_URL;

@@ -8,12 +8,14 @@ import { Link } from 'expo-router';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { useLogin } from '../../api/use-login';
 import { CustomInput } from './input';
 import { loginSchema } from './validator';
 
 export const LoginForm = () => {
   const [secure, setSecure] = useState<boolean>(true);
   const toggleSecure = () => setSecure(!secure);
+  const { mutateAsync } = useLogin();
   const {
     formState: { errors, isSubmitting },
     reset,
@@ -27,8 +29,10 @@ export const LoginForm = () => {
     resolver: zodResolver(loginSchema),
   });
   const onSubmit = async (values: z.infer<typeof loginSchema>) => {
-    console.log(values);
-    reset();
+    try {
+      await mutateAsync(values);
+      reset();
+    } catch (error) {}
   };
   return (
     <Stack mt={20} gap={15}>

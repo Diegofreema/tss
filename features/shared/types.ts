@@ -24,3 +24,14 @@ export type StackProps = {
   flex?: number; // Flex
   style?: object; // Custom style override
 };
+
+export type User = {
+  parentId: string;
+  name: string;
+  email: string;
+};
+
+export type SuccessResponseType = {
+  success: boolean;
+  message: string;
+};

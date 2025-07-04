@@ -7,11 +7,13 @@ import { useRouter } from 'expo-router';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { useRequestPasswordReset } from '../../api/use-request-reset-password';
 import { CustomInput } from './input';
 import { forgotPasswordSchema } from './validator';
 
 export const ForgotPassword = () => {
   const router = useRouter();
+  const { mutateAsync } = useRequestPasswordReset();
   const {
     formState: { errors, isSubmitting },
     reset,
@@ -24,9 +26,15 @@ export const ForgotPassword = () => {
     resolver: zodResolver(forgotPasswordSchema),
   });
   const onSubmit = async (values: z.infer<typeof forgotPasswordSchema>) => {
-    console.log(values);
-    router.push(`/verify-token?email=${values.email}`);
-    reset();
+    await mutateAsync(
+      { email: values.email },
+      {
+        onSuccess: () => {
+          router.push(`/verify-token?email=${values.email}`);
+          reset();
+        },
+      }
+    );
   };
   return (
     <Stack gap={30} mt={30}>

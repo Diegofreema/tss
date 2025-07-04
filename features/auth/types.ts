@@ -1,0 +1,9 @@
+import { z } from 'zod';
+import { loginSchema } from './scehma';
+
+export type LoginType = z.infer<typeof loginSchema>;
+export type LoginResponseType = {
+  message: string;
+  token: string;
+  success: boolean;
+};
