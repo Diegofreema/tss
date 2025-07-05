@@ -1,4 +1,5 @@
 import { Colors } from '@/constants/Colors';
+import { CustomModal } from '@/features/shared/components/modal/custom-modal';
 import { ThemedView } from '@/features/shared/components/ThemedView';
 import {
   MediumText,
@@ -7,17 +8,13 @@ import {
 import { Stack } from '@/features/shared/components/ui/stack';
 import { Wrapper } from '@/features/shared/components/ui/wrapper';
 import { useColorScheme } from '@/hooks/useColorScheme.web';
-import {
-  AntDesign,
-  Feather,
-  Ionicons,
-  MaterialCommunityIcons,
-  MaterialIcons,
-} from '@expo/vector-icons';
-import React from 'react';
+
+import { useAuth } from '@/features/shared/store/use-auth';
+import { Feather, Ionicons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
+import React, { useState } from 'react';
 import {
   FlatList,
-  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
@@ -32,27 +29,35 @@ import {
   ListItemTrailingIcon,
   ListItemWrapper,
 } from '../../../components/list';
-
-interface ListItem {
-  id: string;
-  title: string;
-  subtitle?: string;
-  leadingIcon: React.ReactNode;
-  trailingIcon?: React.ReactNode;
-  onPress?: () => void;
-  type?: 'default' | 'danger' | 'success' | 'warning';
-  badge?: string | number;
-  isActive?: boolean;
-}
+import { appItems, dangerItems, supportItems } from '../constants';
+import { ListItem } from '../types';
 
 export const More = () => {
-  //   const [activeItem, setActiveItem] = useState<string | null>(null);
   const colorScheme = useColorScheme();
   const iconColor = Colors[colorScheme ?? 'light'].icon;
   const titleColor = Colors[colorScheme ?? 'light'].title;
   const cardColor = Colors[colorScheme ?? 'light'].card;
   const borderColor = Colors[colorScheme ?? 'light'].cardBorder;
-  const onPress = (id: string) => {};
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const { clearUser } = useAuth();
+  const router = useRouter();
+  const onPress = (id: string) => {
+    switch (id) {
+      case 'profile':
+        router.push('/profile');
+        break;
+      case 'logout':
+        setShowLogoutModal(true);
+        break;
+      case 'delete':
+        setShowLogoutModal(true);
+        break;
+
+      default:
+        break;
+    }
+  };
   const profileItems: ListItem[] = [
     {
       id: 'profile',
@@ -60,151 +65,11 @@ export const More = () => {
       subtitle: 'Manage your personal information',
       leadingIcon: <Feather name="user" size={20} color={iconColor} />,
       trailingIcon: <Feather name="chevron-right" size={20} color="#6B7280" />,
-      onPress: () => onPress('profile'),
-    },
-    // {
-    //   id: 'notifications',
-    //   title: 'Notifications',
-    //   subtitle: 'Push notifications, email alerts',
-    //   leadingIcon: (
-    //     <Ionicons name="notifications-outline" size={20} color={iconColor} />
-    //   ),
-    //   trailingIcon: <Feather name="chevron-right" size={20} color="#6B7280" />,
-    //   badge: '3',
-    //   onPress: () => setActiveItem('notifications'),
-    // },
-    {
-      id: 'privacy',
-      title: 'Privacy & Security',
-      subtitle: 'Data protection and security settings',
-      leadingIcon: (
-        <MaterialIcons name="security" size={20} color={iconColor} />
-      ),
-      trailingIcon: <Feather name="chevron-right" size={20} color="#6B7280" />,
-      onPress: () => onPress('privacy'),
-    },
-  ];
-
-  const appItems: ListItem[] = [
-    {
-      id: 'theme',
-      title: 'Appearance',
-      subtitle: 'Dark mode, themes, display settings',
-      leadingIcon: <Feather name="moon" size={20} color="#8B5CF6" />,
-      trailingIcon: <Text style={styles.trailingText}>Dark</Text>,
-      onPress: () => onPress('theme'),
-    },
-    {
-      id: 'language',
-      title: 'Language',
-      subtitle: 'App language and region',
-      leadingIcon: (
-        <Ionicons name="language-outline" size={20} color="#06B6D4" />
-      ),
-      trailingIcon: <Text style={styles.trailingText}>English</Text>,
-      onPress: () => onPress('language'),
-    },
-    // {
-    //   id: 'storage',
-    //   title: 'Storage',
-    //   subtitle: 'Manage app data and cache',
-    //   leadingIcon: <Feather name="hard-drive" size={20} color="#10B981" />,
-    //   trailingIcon: <Text style={styles.trailingText}>2.4 GB</Text>,
-    //   onPress: () => setActiveItem('storage'),
-    // },
-  ];
-  //   const activityItems: ListItem[] = [
-  //     {
-  //       id: 'login',
-  //       title: 'Login Activity',
-  //       subtitle: 'Signed in from iPhone • 2 hours ago',
-  //       leadingIcon: (
-  //         <MaterialCommunityIcons name="login" size={20} color="#10B981" />
-  //       ),
-  //       type: 'success',
-  //       onPress: () => setActiveItem('login'),
-  //     },
-  //     {
-  //       id: 'backup',
-  //       title: 'Backup Completed',
-  //       subtitle: 'All data backed up successfully • 1 day ago',
-  //       leadingIcon: <MaterialIcons name="backup" size={20} color="#3B82F6" />,
-  //       onPress: () => setActiveItem('backup'),
-  //     },
-  //     {
-  //       id: 'warning',
-  //       title: 'Storage Almost Full',
-  //       subtitle: '91% of storage used • 3 days ago',
-  //       leadingIcon: <Feather name="alert-triangle" size={20} color="#F59E0B" />,
-  //       type: 'warning',
-  //       onPress: () => setActiveItem('warning'),
-  //     },
-  //     {
-  //       id: 'error',
-  //       title: 'Sync Failed',
-  //       subtitle: 'Unable to sync data • 5 days ago',
-  //       leadingIcon: (
-  //         <MaterialIcons name="sync-problem" size={20} color="#EF4444" />
-  //       ),
-  //       type: 'danger',
-  //       onPress: () => setActiveItem('error'),
-  //     },
-  //   ];
-
-  const supportItems: ListItem[] = [
-    {
-      id: 'help',
-      title: 'Help Center',
-      subtitle: 'FAQs, guides, and tutorials',
-      leadingIcon: <Feather name="help-circle" size={20} color="#E5E7EB" />,
-      trailingIcon: <Feather name="external-link" size={18} color="#6B7280" />,
-      onPress: () => onPress('help'),
-    },
-    {
-      id: 'contact',
-      title: 'Contact Support',
-      subtitle: 'Get help from our support team',
-      leadingIcon: <Feather name="message-circle" size={20} color="#E5E7EB" />,
-      trailingIcon: <Feather name="chevron-right" size={20} color="#6B7280" />,
-      onPress: () => onPress('contact'),
-    },
-    {
-      id: 'feedback',
-      title: 'Send Feedback',
-      subtitle: 'Help us improve the app',
-      leadingIcon: <MaterialIcons name="feedback" size={20} color="#E5E7EB" />,
-      trailingIcon: <Feather name="chevron-right" size={20} color="#6B7280" />,
-      onPress: () => onPress('feedback'),
-    },
-  ];
-
-  const dangerItems: ListItem[] = [
-    {
-      id: 'logout',
-      title: 'Sign Out',
-      subtitle: 'Sign out of your account',
-      leadingIcon: (
-        <MaterialCommunityIcons name="logout" size={20} color="#EF4444" />
-      ),
-      type: 'danger',
-      onPress: () => {},
-    },
-    {
-      id: 'delete',
-      title: 'Delete Account',
-      subtitle: 'Permanently delete your account',
-      leadingIcon: <AntDesign name="deleteuser" size={20} color="#EF4444" />,
-      type: 'danger',
-      onPress: () => onPress('delete'),
     },
   ];
 
   const renderListItem = ({ item }: { item: ListItem }) => (
-    <TouchableOpacity
-      onPress={item.onPress}
-      //   style={[activeItem === item.id && styles.activeListItem]}
-      activeOpacity={0.7}
-    >
+    <TouchableOpacity onPress={() => onPress(item.id)} activeOpacity={0.7}>
       <ListItemWrapper>
         <ListItemLeadingIcon>
           <ThemedView style={{ marginLeft: 4 }}>{item.leadingIcon}</ThemedView>
@@ -256,37 +121,57 @@ export const More = () => {
     </ThemedView>
   );
 
+  const onClose = () => {
+    setShowLogoutModal(false);
+  };
+  const logout = () => {
+    clearUser();
+    onClose();
+  };
+  const onCloseDelete = () => {
+    setShowDeleteModal(false);
+  };
+  const onDelete = async () => {};
   return (
     <Wrapper>
-      <SafeAreaView style={styles.safeArea}>
-        <ScrollView
-          style={styles.scrollView}
-          contentContainerStyle={styles.scrollContentContainer}
-          showsVerticalScrollIndicator={false}
-          scrollEnabled
-          contentInsetAdjustmentBehavior="automatic"
-        >
-          <ThemedView style={styles.header}>
-            <Stack direction="row" alignItems="center" gap={4}>
-              <Ionicons name="settings-sharp" color={iconColor} size={30} />
-              <MediumText>Settings</MediumText>
-            </Stack>
-            <NormalText>Manage your account and app preferences</NormalText>
-          </ThemedView>
+      <CustomModal
+        onPress={logout}
+        onClose={onClose}
+        subTitle="This will log you out of your account"
+        visible={showLogoutModal}
+      />
+      <CustomModal
+        onPress={onDelete}
+        onClose={onCloseDelete}
+        visible={showDeleteModal}
+      />
+      <ScrollView
+        style={styles.scrollView}
+        contentContainerStyle={styles.scrollContentContainer}
+        showsVerticalScrollIndicator={false}
+        scrollEnabled
+        contentInsetAdjustmentBehavior="automatic"
+      >
+        <ThemedView style={styles.header}>
+          <Stack direction="row" alignItems="center" gap={4}>
+            <Ionicons name="settings-sharp" color={iconColor} size={30} />
+            <MediumText>Settings</MediumText>
+          </Stack>
+          <NormalText>Manage your account and app preferences</NormalText>
+        </ThemedView>
 
-          {renderSection('Account', profileItems, 'profile')}
-          {renderSection('Preferences', appItems, 'app')}
-          {/* {renderSection('Recent Activity', activityItems, 'activity')} */}
-          {renderSection('Support', supportItems, 'support')}
-          {renderSection('Account Actions', dangerItems, 'danger')}
+        {renderSection('Account', profileItems, 'profile')}
+        {renderSection('Preferences', appItems, 'app')}
+        {/* {renderSection('Recent Activity', activityItems, 'activity')} */}
+        {renderSection('Support', supportItems, 'support')}
+        {renderSection('Account Actions', dangerItems, 'danger')}
 
-          <View style={styles.footer}>
-            <Text style={styles.footerText}>
-              App Version 1.2.3 • Last updated 2 days ago
-            </Text>
-          </View>
-        </ScrollView>
-      </SafeAreaView>
+        <View style={styles.footer}>
+          <Text style={styles.footerText}>
+            App Version 1.2.3 • Last updated 2 days ago
+          </Text>
+        </View>
+      </ScrollView>
     </Wrapper>
   );
 };

@@ -30,8 +30,14 @@ export type StackProps = {
 
 export type User = {
   parentid: string;
-  name: string;
+  fname: string;
   email: string;
+  address: string;
+  address2?: string;
+  city: string;
+  phone: string;
+  profesion: string;
+  states: string;
 };
 
 export type SuccessResponseType = {

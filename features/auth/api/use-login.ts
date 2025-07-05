@@ -13,7 +13,7 @@ export const useLogin = () => {
     },
     onSuccess: (data) => {
       getUser(data.data);
-      toast(`Success, welcome back ${data.data.name} `, 'success');
+      toast(`Success, welcome back ${data.data.fname} `, 'success');
     },
     onError: (error) => {
       if (error.message === 'Request failed with status code 401') {
