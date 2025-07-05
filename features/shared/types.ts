@@ -38,6 +38,7 @@ export type User = {
   phone: string;
   profesion: string;
   states: string;
+  token: string;
 };
 
 export type SuccessResponseType = {

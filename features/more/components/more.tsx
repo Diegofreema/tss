@@ -9,6 +9,8 @@ import { Stack } from '@/features/shared/components/ui/stack';
 import { Wrapper } from '@/features/shared/components/ui/wrapper';
 import { useColorScheme } from '@/hooks/useColorScheme.web';
 
+import { useDeleteAccount } from '@/features/auth/api/use-delete-account';
+import { LoadingModal } from '@/features/shared/components/modal/loading-modal';
 import { useAuth } from '@/features/shared/store/use-auth';
 import { Feather, Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
@@ -40,7 +42,9 @@ export const More = () => {
   const borderColor = Colors[colorScheme ?? 'light'].cardBorder;
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const { mutateAsync, isPending } = useDeleteAccount();
   const { clearUser } = useAuth();
+
   const router = useRouter();
   const onPress = (id: string) => {
     switch (id) {
@@ -51,7 +55,7 @@ export const More = () => {
         setShowLogoutModal(true);
         break;
       case 'delete':
-        setShowLogoutModal(true);
+        setShowDeleteModal(true);
         break;
 
       default:
@@ -131,7 +135,10 @@ export const More = () => {
   const onCloseDelete = () => {
     setShowDeleteModal(false);
   };
-  const onDelete = async () => {};
+  const onDeleteAccount = async () => {
+    await mutateAsync();
+    onCloseDelete();
+  };
   return (
     <Wrapper>
       <CustomModal
@@ -141,10 +148,11 @@ export const More = () => {
         visible={showLogoutModal}
       />
       <CustomModal
-        onPress={onDelete}
+        onPress={onDeleteAccount}
         onClose={onCloseDelete}
         visible={showDeleteModal}
       />
+      <LoadingModal visible={isPending} />
       <ScrollView
         style={styles.scrollView}
         contentContainerStyle={styles.scrollContentContainer}

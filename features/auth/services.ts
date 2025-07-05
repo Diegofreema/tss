@@ -30,7 +30,10 @@ export const currentUser = async (token: string) => {
     },
   });
 
-  return data;
+  return {
+    ...data,
+    data: { ...data.data, token },
+  };
 };
 
 export const requestPasswordReset = async (email: string) => {
@@ -64,6 +67,18 @@ export const resetPassword = async ({
       email,
       otp,
       newPassword,
+    }
+  );
+  return data;
+};
+
+export const deleteAccount = async ({ token }: { token: string }) => {
+  const { data } = await axios.post<SuccessResponseType>(
+    `${baseUrl}/parent/me`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     }
   );
   return data;
