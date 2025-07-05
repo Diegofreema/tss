@@ -4,17 +4,21 @@ import { Stack } from '@/features/shared/components/ui/stack';
 import { colors } from '@/features/shared/constants';
 import { Feather } from '@expo/vector-icons';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { router, useLocalSearchParams } from 'expo-router';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { useReset } from '../../api/use-reset';
 import { CustomInput } from './input';
 import { newPasswordSchema } from './validator';
 
 export const NewPasswordForm = () => {
   const [secure, setSecure] = useState<boolean>(true);
+  const { otp, email } = useLocalSearchParams<{ otp: string; email: string }>();
+  const { mutateAsync } = useReset();
   const toggleSecure = () => setSecure(!secure);
   const [secure2, setSecure2] = useState<boolean>(true);
-  const toggleSecure2 = () => setSecure2(!secure);
+  const toggleSecure2 = () => setSecure2(!secure2);
 
   const {
     formState: { errors, isSubmitting },
@@ -30,35 +34,17 @@ export const NewPasswordForm = () => {
     resolver: zodResolver(newPasswordSchema),
   });
   const onSubmit = async (values: z.infer<typeof newPasswordSchema>) => {
-    console.log(values);
-    reset();
+    await mutateAsync(
+      { otp, email, newPassword: values.password },
+      {
+        onSuccess: () => {
+          router.replace('/login');
+          reset();
+        },
+      }
+    );
   };
 
-  const getPasswordStrength = (password: string) => {
-    if (!password) return { strength: 0, label: '', color: '' };
-
-    let strength = 0;
-    if (password.length >= 8) strength++;
-    if (/[A-Z]/.test(password)) strength++;
-    if (/[a-z]/.test(password)) strength++;
-    if (/[0-9]/.test(password)) strength++;
-    if (/[^A-Za-z0-9]/.test(password)) strength++;
-
-    const labels = ['Very Weak', 'Weak', 'Fair', 'Good', 'Strong'];
-    const colors = [
-      'bg-red-500',
-      'bg-orange-500',
-      'bg-yellow-500',
-      'bg-blue-500',
-      'bg-green-500',
-    ];
-
-    return {
-      strength,
-      label: labels[strength - 1] || '',
-      color: colors[strength - 1] || '',
-    };
-  };
   const password = watch('password');
 
   return (

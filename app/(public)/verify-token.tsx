@@ -13,7 +13,7 @@ import { Header } from '@/features/shared/components/ui/header';
 import { Stack } from '@/features/shared/components/ui/stack';
 import { Wrapper } from '@/features/shared/components/ui/wrapper';
 import { colors } from '@/features/shared/constants';
-import { useLocalSearchParams } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import React, { useCallback, useEffect, useState } from 'react';
 import { RFValue } from 'react-native-responsive-fontsize';
 
@@ -23,7 +23,14 @@ const VerifyToken = () => {
   const { mutateAsync, isPending } = useRequestPasswordReset();
   const { mutateAsync: verifyToken, isPending: isVerifying } = useVerifyOtp();
   const onComplete = async (code: string) => {
-    await verifyToken({ email, otp: code });
+    await verifyToken(
+      { email, otp: code },
+      {
+        onSuccess: () => {
+          router.push(`/new-password?otp=${code}&email=${email}`);
+        },
+      }
+    );
   };
 
   const [timeLeft, setTimeLeft] = useState<number>(60);

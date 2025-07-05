@@ -1,6 +1,5 @@
 import { toast } from '@/features/shared/utils';
 import { useMutation } from '@tanstack/react-query';
-import { router } from 'expo-router';
 import { verifyOtp } from '../services';
 import { VerifyOtpType } from '../types';
 
@@ -13,7 +12,6 @@ export const useVerifyOtp = () => {
     onSuccess: (data) => {
       if (data.message === 'OTP verified') {
         toast('Otp verified successfully', 'success');
-        router.push('/new-password');
       }
     },
     onError: (error) => {

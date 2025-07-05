@@ -12,3 +12,9 @@ export type VerifyOtpType = {
   email: string;
   otp: string;
 };
+
+export type ResetPasswordType = {
+  email: string;
+  newPassword: string;
+  otp: string;
+};
