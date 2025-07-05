@@ -33,7 +33,7 @@ import {
   ListItemTrailingIcon,
   ListItemWrapper,
 } from '../../../components/list';
-import { appItems, dangerItems, supportItems } from '../constants';
+import { dangerItems, supportItems } from '../constants';
 import { ListItem } from '../types';
 export const More = () => {
   const colorScheme = useColorScheme();
@@ -45,7 +45,7 @@ export const More = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const { mutateAsync, isPending } = useDeleteAccount();
   const { clearUser } = useAuth();
-
+  const isDark = colorScheme === 'dark';
   const router = useRouter();
   const handleOpenEmail = async () => {
     const isAvailable = await MailComposer.isAvailableAsync();
@@ -95,6 +95,9 @@ export const More = () => {
       case 'feedback':
         handleOpenEmail();
         break;
+      case 'theme':
+        router.push('/theme');
+        break;
 
       default:
         break;
@@ -107,6 +110,26 @@ export const More = () => {
       subtitle: 'Manage your personal information',
       leadingIcon: <Feather name="user" size={20} color={iconColor} />,
       trailingIcon: <Feather name="chevron-right" size={20} color="#6B7280" />,
+    },
+  ];
+  const appItems: ListItem[] = [
+    {
+      id: 'theme',
+      title: 'Appearance',
+      subtitle: 'Dark mode, themes',
+      leadingIcon: <Feather name="moon" size={20} color="#8B5CF6" />,
+      trailingIcon: (
+        <Text style={styles.trailingText}>{isDark ? 'Dark' : 'Light'}</Text>
+      ),
+    },
+    {
+      id: 'language',
+      title: 'Language',
+      subtitle: 'App language and region',
+      leadingIcon: (
+        <Ionicons name="language-outline" size={20} color="#06B6D4" />
+      ),
+      trailingIcon: <Text style={styles.trailingText}>English</Text>,
     },
   ];
 

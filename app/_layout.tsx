@@ -17,6 +17,7 @@ import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
+import { Appearance } from 'react-native';
 import 'react-native-reanimated';
 
 const queryClient = new QueryClient();
@@ -34,6 +35,7 @@ SplashScreen.setOptions({
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
+
   const { user } = useAuth();
   const [loaded] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
@@ -41,7 +43,9 @@ export default function RootLayout() {
     PublicSansMedium: require('../assets/fonts/PublicSans-Medium.ttf'),
     PublicSansRegular: require('../assets/fonts/PublicSans-Regular.ttf'),
   });
-
+  useEffect(() => {
+    Appearance.setColorScheme(colorScheme === 'dark' ? 'dark' : 'light');
+  }, [colorScheme]);
   useEffect(() => {
     if (loaded) {
       void SplashScreen.hideAsync();

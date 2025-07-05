@@ -1,12 +1,16 @@
+import { Colors } from '@/constants/Colors';
 import { ThemedView } from '@/features/shared/components/ThemedView';
 import { CustomPressable } from '@/features/shared/components/ui/custom-pressable';
 import { colors } from '@/features/shared/constants';
-import { Image } from 'expo-image';
+import { useColorScheme } from '@/hooks/useColorScheme.web';
+import { Feather } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { StyleSheet } from 'react-native';
 
 export const Header = () => {
   const router = useRouter();
+  const colorScheme = useColorScheme();
+  const iconColor = Colors[colorScheme ?? 'light'].icon;
   const onPress = () => {
     if (router.canGoBack()) {
       router.back();
@@ -15,11 +19,7 @@ export const Header = () => {
   return (
     <ThemedView style={styles.container}>
       <CustomPressable onPress={onPress} style={styles.button}>
-        <Image
-          source={require('@/assets/images/arrow.png')}
-          style={{ width: 20, height: 20 }}
-          contentFit={'cover'}
-        />
+        <Feather name="chevrons-left" size={24} color={iconColor} />
       </CustomPressable>
     </ThemedView>
   );

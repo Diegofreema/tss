@@ -1,11 +1,10 @@
 import {
   AntDesign,
   Feather,
-  Ionicons,
   MaterialCommunityIcons,
   MaterialIcons,
 } from '@expo/vector-icons';
-import { StyleSheet, Text } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { ListItem } from './types';
 
 const styles = StyleSheet.create({
@@ -159,30 +158,6 @@ const styles = StyleSheet.create({
   },
 });
 
-export const appItems: ListItem[] = [
-  {
-    id: 'theme',
-    title: 'Appearance',
-    subtitle: 'Dark mode, themes, display settings',
-    leadingIcon: <Feather name="moon" size={20} color="#8B5CF6" />,
-    trailingIcon: <Text style={styles.trailingText}>Dark</Text>,
-  },
-  {
-    id: 'language',
-    title: 'Language',
-    subtitle: 'App language and region',
-    leadingIcon: <Ionicons name="language-outline" size={20} color="#06B6D4" />,
-    trailingIcon: <Text style={styles.trailingText}>English</Text>,
-  },
-  // {
-  //   id: 'storage',
-  //   title: 'Storage',
-  //   subtitle: 'Manage app data and cache',
-  //   leadingIcon: <Feather name="hard-drive" size={20} color="#10B981" />,
-  //   trailingIcon: <Text style={styles.trailingText}>2.4 GB</Text>,
-  //   onPress: () => setActiveItem('storage'),
-  // },
-];
 //   const activityItems: ListItem[] = [
 //     {
 //       id: 'login',
