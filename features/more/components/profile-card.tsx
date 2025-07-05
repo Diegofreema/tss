@@ -37,7 +37,7 @@ export const ProfileCard = () => {
         </CardHeader>
         <CardFooter style={{ marginTop: 20 }}>
           <Button
-            w={50}
+            w={60}
             title="Update profile"
             onPress={() => router.push('/update-profile')}
           />

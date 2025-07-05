@@ -1,5 +1,8 @@
+import { Colors } from '@/constants/Colors';
+import { useColorScheme } from '@/hooks/useColorScheme.web';
 import React, { Children, ReactNode } from 'react';
 import { Dimensions, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { ThemedView } from './ThemedView';
 import { Stack } from './ui/stack';
 
 const { width } = Dimensions.get('window');
@@ -26,6 +29,8 @@ interface CardFooterProps {
 }
 
 export const Card = ({ children, style, onPress }: CardProps) => {
+  const colorScheme = useColorScheme();
+  const bg = Colors[colorScheme ?? 'light'].card;
   const renderChildren = () => {
     return Children.map(children, (child, index) => {
       if (React.isValidElement(child)) {
@@ -42,7 +47,9 @@ export const Card = ({ children, style, onPress }: CardProps) => {
       <View style={[styles.card, style]}>{renderChildren()}</View>
     </TouchableOpacity>
   ) : (
-    <View style={[styles.card, style]}>{renderChildren()}</View>
+    <ThemedView style={[styles.card, { backgroundColor: bg }, style]}>
+      {renderChildren()}
+    </ThemedView>
   );
 };
 
@@ -66,7 +73,6 @@ export const CardFooter = ({ children, style }: CardFooterProps) => (
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: '#FFFFFF',
     borderRadius: 8,
     elevation: 4, // Shadow for Android
     shadowColor: '#000', // Shadow for iOS
@@ -74,6 +80,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 4,
     marginVertical: width * 0.01,
+    padding: 5,
   },
 
   content: {
