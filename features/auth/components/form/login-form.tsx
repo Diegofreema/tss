@@ -29,10 +29,11 @@ export const LoginForm = () => {
     resolver: zodResolver(loginSchema),
   });
   const onSubmit = async (values: z.infer<typeof loginSchema>) => {
-    try {
-      await mutateAsync(values);
-      reset();
-    } catch (error) {}
+    await mutateAsync(values, {
+      onSuccess: () => {
+        reset();
+      },
+    });
   };
   return (
     <Stack mt={20} gap={15}>

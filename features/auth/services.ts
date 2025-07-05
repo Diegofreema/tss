@@ -20,7 +20,11 @@ export const login = async ({ email, password }: LoginType) => {
 };
 
 export const currentUser = async (token: string) => {
-  const { data } = await axios.get<User>(`${baseUrl}/parents/current-user`, {
+  const { data } = await axios.get<{
+    data: User;
+    message: string;
+    success: boolean;
+  }>(`${baseUrl}/parents/current-user`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

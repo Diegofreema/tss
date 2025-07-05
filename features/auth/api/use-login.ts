@@ -12,8 +12,8 @@ export const useLogin = () => {
       return data;
     },
     onSuccess: (data) => {
-      getUser(data);
-      toast(`Success, welcome back ${data.name} `, 'success');
+      getUser(data.data);
+      toast(`Success, welcome back ${data.data.name} `, 'success');
     },
     onError: (error) => {
       if (error.message === 'Request failed with status code 401') {

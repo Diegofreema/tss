@@ -26,7 +26,7 @@ export type StackProps = {
 };
 
 export type User = {
-  parentId: string;
+  parentid: string;
   name: string;
   email: string;
 };
