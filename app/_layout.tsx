@@ -1,5 +1,6 @@
 import { ToastProviderWithViewport } from '@/components/toast';
 import { useAuth } from '@/features/shared/store/use-auth';
+import { useTheme } from '@/features/shared/store/useTheme';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import NetInfo from '@react-native-community/netinfo';
 import {
@@ -35,7 +36,7 @@ SplashScreen.setOptions({
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
-
+  const theme = useTheme((state) => state.theme);
   const { user } = useAuth();
   const [loaded] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
@@ -44,8 +45,8 @@ export default function RootLayout() {
     PublicSansRegular: require('../assets/fonts/PublicSans-Regular.ttf'),
   });
   useEffect(() => {
-    Appearance.setColorScheme(colorScheme === 'dark' ? 'dark' : 'light');
-  }, [colorScheme]);
+    Appearance.setColorScheme(theme);
+  }, [theme]);
   useEffect(() => {
     if (loaded) {
       void SplashScreen.hideAsync();

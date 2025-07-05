@@ -12,10 +12,11 @@ import { Wrapper } from '@/features/shared/components/ui/wrapper';
 import { useAuth } from '@/features/shared/store/use-auth';
 import { useColorScheme } from '@/hooks/useColorScheme.web';
 import { Feather, Ionicons } from '@expo/vector-icons';
+import * as Application from 'expo-application';
 import * as MailComposer from 'expo-mail-composer';
 import { useRouter } from 'expo-router';
 import * as WebBrowser from 'expo-web-browser';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Alert,
   FlatList,
@@ -35,6 +36,7 @@ import {
 } from '../../../components/list';
 import { dangerItems, supportItems } from '../constants';
 import { ListItem } from '../types';
+import { formatTimeAgo } from '../util';
 export const More = () => {
   const colorScheme = useColorScheme();
   const iconColor = Colors[colorScheme ?? 'light'].icon;
@@ -43,8 +45,18 @@ export const More = () => {
   const borderColor = Colors[colorScheme ?? 'light'].cardBorder;
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [lastUpdated, setLastUpdated] = useState<Date>(new Date());
   const { mutateAsync, isPending } = useDeleteAccount();
   const { clearUser } = useAuth();
+
+  useEffect(() => {
+    const getLastUpdated = async () => {
+      const result = await Application.getLastUpdateTimeAsync();
+      setLastUpdated(result);
+    };
+    getLastUpdated();
+  }, []);
+
   const isDark = colorScheme === 'dark';
   const router = useRouter();
   const handleOpenEmail = async () => {
@@ -200,6 +212,7 @@ export const More = () => {
     await mutateAsync();
     onCloseDelete();
   };
+
   return (
     <Wrapper>
       <CustomModal
@@ -237,7 +250,8 @@ export const More = () => {
 
         <View style={styles.footer}>
           <Text style={styles.footerText}>
-            App Version 1.2.3 • Last updated 2 days ago
+            App Version {Application.nativeApplicationVersion} • Last updated{' '}
+            {formatTimeAgo(lastUpdated)}
           </Text>
         </View>
       </ScrollView>
@@ -258,6 +272,7 @@ const styles = StyleSheet.create({
   },
   scrollContentContainer: {
     flexGrow: 1,
+    paddingBottom: 100,
   },
   header: {
     paddingTop: 20,

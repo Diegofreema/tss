@@ -3,15 +3,15 @@ import { Spacer } from '@/features/shared/components/spacer';
 import { BoldText, NormalText } from '@/features/shared/components/typography';
 import { Header } from '@/features/shared/components/ui/header';
 import { Wrapper } from '@/features/shared/components/ui/wrapper';
-import { useColorScheme } from '@/hooks/useColorScheme.web';
+import { useTheme } from '@/features/shared/store/useTheme';
 import React from 'react';
-import { Appearance, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 const Theme = () => {
-  const colorScheme = useColorScheme();
-  const isDark = colorScheme === 'dark';
+  const { theme, toggleTheme } = useTheme();
+  const isDark = theme === 'dark';
   const onValueChange = () => {
-    Appearance.setColorScheme(colorScheme === 'dark' ? 'light' : 'dark');
+    toggleTheme();
   };
 
   return (
