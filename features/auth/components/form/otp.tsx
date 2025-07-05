@@ -1,5 +1,5 @@
 import { OTPInput, type OTPInputRef, type SlotProps } from 'input-otp-native';
-import { Alert, StyleSheet, Text, View, type ViewStyle } from 'react-native';
+import { StyleSheet, Text, View, type ViewStyle } from 'react-native';
 
 import { useEffect, useRef } from 'react';
 
@@ -13,19 +13,21 @@ import Animated, {
 
 type Props = {
   maxLength?: number;
+  onComplete: (code: string) => void;
 };
 
-export const AppleOTPInput = ({ maxLength = 4 }: Props) => {
+export const AppleOTPInput = ({ maxLength = 4, onComplete }: Props) => {
   const ref = useRef<OTPInputRef>(null);
-  const onComplete = (code: string) => {
-    Alert.alert('Completed with code:', code);
+  const onFinish = (code: string) => {
+    onComplete(code);
+
     ref.current?.clear();
   };
 
   return (
     <OTPInput
       ref={ref}
-      onComplete={onComplete}
+      onComplete={onFinish}
       containerStyle={styles.container}
       maxLength={maxLength}
       render={({ slots }) => (

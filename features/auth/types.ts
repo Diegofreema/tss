@@ -7,3 +7,8 @@ export type LoginResponseType = {
   token: string;
   success: boolean;
 };
+
+export type VerifyOtpType = {
+  email: string;
+  otp: string;
+};

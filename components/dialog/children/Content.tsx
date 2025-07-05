@@ -1,5 +1,12 @@
-import { ReactNode, useContext, useEffect, useState } from "react";
-import { DialogContext } from "../context/DialogContext";
+import { BlurView } from 'expo-blur';
+import { ReactNode, useContext, useEffect, useMemo, useState } from 'react';
+import {
+  Pressable,
+  StyleProp,
+  StyleSheet,
+  View,
+  ViewStyle,
+} from 'react-native';
 import Animated, {
   Easing,
   runOnJS,
@@ -7,16 +14,9 @@ import Animated, {
   useSharedValue,
   withSpring,
   withTiming,
-} from "react-native-reanimated";
-import {
-  Pressable,
-  StyleProp,
-  StyleSheet,
-  View,
-  ViewStyle,
-} from "react-native";
-import { DialogStyles as styles } from "../styles/styles";
-import { BlurView } from "expo-blur";
+} from 'react-native-reanimated';
+import { DialogContext } from '../context/DialogContext';
+import { DialogStyles as styles } from '../styles/styles';
 const AnimatedBlurView = Animated.createAnimatedComponent(BlurView);
 
 export function DialogContent({
@@ -27,7 +27,7 @@ export function DialogContent({
   style?: StyleProp<ViewStyle>;
 }) {
   const ctx = useContext(DialogContext);
-  if (!ctx) throw new Error("Dialog.Content must be used within <Dialog>");
+  if (!ctx) throw new Error('Dialog.Content must be used within <Dialog>');
   const { open, setOpen } = ctx;
 
   const [isMounted, setIsMounted] = useState(open);
@@ -50,19 +50,25 @@ export function DialogContent({
     opacity: blurOpacity.value,
   }));
 
-  const springConfig = {
-    damping: 18,
-    mass: 1,
-    stiffness: 150,
-    overshootClamping: false,
+  const springConfig = useMemo(
+    () => ({
+      damping: 18,
+      mass: 1,
+      stiffness: 150,
+      overshootClamping: false,
 
-    restSpeedThreshold: 2,
-  };
+      restSpeedThreshold: 2,
+    }),
+    []
+  );
 
-  const timingConfig = {
-    duration: 220,
-    easing: Easing.bezier(0.16, 1, 0.3, 1),
-  };
+  const timingConfig = useMemo(
+    () => ({
+      duration: 220,
+      easing: Easing.bezier(0.16, 1, 0.3, 1),
+    }),
+    []
+  );
 
   useEffect(() => {
     if (open) {
@@ -101,10 +107,19 @@ export function DialogContent({
         },
         () => {
           runOnJS(setIsMounted)(false);
-        },
+        }
       );
     }
-  }, [open]);
+  }, [
+    open,
+    blurOpacity,
+    isMounted,
+    opacity,
+    scale,
+    springConfig,
+    timingConfig,
+    translateY,
+  ]);
 
   if (!isMounted) return null;
 
