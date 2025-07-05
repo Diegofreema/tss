@@ -41,7 +41,11 @@ export default function TabLayout() {
         options={{
           title: 'Performance',
           tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="chart.dots.scatter" color={color} />
+            <IconSymbol
+              size={28}
+              name="bolt.badge.automatic.fill"
+              color={color}
+            />
           ),
         }}
       />

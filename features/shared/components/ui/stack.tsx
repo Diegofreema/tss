@@ -22,6 +22,7 @@ export const Stack = ({
   flex,
   flexWrap,
   justifyContent,
+  width,
 }: PropsWithChildren<StackProps>) => {
   const dynamicStyles = {
     flexDirection: direction,
@@ -41,6 +42,7 @@ export const Stack = ({
     flex,
     flexWrap,
     justifyContent,
+    width,
   };
   return <ThemedView style={[dynamicStyles, style]}>{children}</ThemedView>;
 };

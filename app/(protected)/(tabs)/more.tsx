@@ -1,11 +1,12 @@
+import { More } from '@/features/more/components/more';
+import { Wrapper } from '@/features/shared/components/ui/wrapper';
 import React from 'react';
-import { Text, View } from 'react-native';
 
 const MoreScreen = () => {
   return (
-    <View>
-      <Text>MoreScreen</Text>
-    </View>
+    <Wrapper>
+      <More />
+    </Wrapper>
   );
 };
 

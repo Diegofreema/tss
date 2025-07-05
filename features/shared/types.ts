@@ -1,3 +1,5 @@
+import { DimensionValue } from 'react-native';
+
 export type StackProps = {
   direction?: 'row' | 'column'; // Flex direction
   m?: number; // Margin
@@ -23,6 +25,7 @@ export type StackProps = {
   backgroundColor?: string; // Background color
   flex?: number; // Flex
   style?: object; // Custom style override
+  width?: DimensionValue;
 };
 
 export type User = {
