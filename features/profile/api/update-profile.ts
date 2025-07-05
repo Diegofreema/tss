@@ -1,0 +1,31 @@
+import { useAuth } from '@/features/shared/store/use-auth';
+import { toast } from '@/features/shared/utils';
+import { useMutation } from '@tanstack/react-query';
+import { router } from 'expo-router';
+import { updateProfile } from '../services';
+import { UpdateProfileType } from '../types';
+
+export const useUpdateProfile = () => {
+  const user = useAuth((state) => state.user);
+  const getUser = useAuth((state) => state.getUser);
+
+  return useMutation({
+    mutationFn: async (values: UpdateProfileType) => {
+      const data = await updateProfile({ token: user?.token!, ...values });
+      return data;
+    },
+    onSuccess: (data) => {
+      if (!user) return;
+      const { address, city, phone, profesion, states } = data.data;
+      getUser({ ...user, city, address, phone, profesion, states });
+
+      toast(`Profile updated`, 'success');
+      router.replace('/profile');
+    },
+    onError: (error) => {
+      console.log(error.message);
+
+      toast(`An error occurred, Please try again later`, 'error');
+    },
+  });
+};

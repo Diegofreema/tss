@@ -223,9 +223,9 @@ export const appItems: ListItem[] = [
 
 export const supportItems: ListItem[] = [
   {
-    id: 'help',
-    title: 'Help Center',
-    subtitle: 'FAQs, guides, and tutorials',
+    id: 'policy',
+    title: 'Privacy Policy',
+    subtitle: 'Read how we manage your data',
     leadingIcon: <Feather name="help-circle" size={20} color="#E5E7EB" />,
     trailingIcon: <Feather name="external-link" size={18} color="#6B7280" />,
   },

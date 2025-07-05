@@ -1,5 +1,7 @@
 import { Colors } from '@/constants/Colors';
+import { useDeleteAccount } from '@/features/auth/api/use-delete-account';
 import { CustomModal } from '@/features/shared/components/modal/custom-modal';
+import { LoadingModal } from '@/features/shared/components/modal/loading-modal';
 import { ThemedView } from '@/features/shared/components/ThemedView';
 import {
   MediumText,
@@ -7,15 +9,15 @@ import {
 } from '@/features/shared/components/typography';
 import { Stack } from '@/features/shared/components/ui/stack';
 import { Wrapper } from '@/features/shared/components/ui/wrapper';
-import { useColorScheme } from '@/hooks/useColorScheme.web';
-
-import { useDeleteAccount } from '@/features/auth/api/use-delete-account';
-import { LoadingModal } from '@/features/shared/components/modal/loading-modal';
 import { useAuth } from '@/features/shared/store/use-auth';
+import { useColorScheme } from '@/hooks/useColorScheme.web';
 import { Feather, Ionicons } from '@expo/vector-icons';
+import * as MailComposer from 'expo-mail-composer';
 import { useRouter } from 'expo-router';
+import * as WebBrowser from 'expo-web-browser';
 import React, { useState } from 'react';
 import {
+  Alert,
   FlatList,
   ScrollView,
   StyleSheet,
@@ -33,7 +35,6 @@ import {
 } from '../../../components/list';
 import { appItems, dangerItems, supportItems } from '../constants';
 import { ListItem } from '../types';
-
 export const More = () => {
   const colorScheme = useColorScheme();
   const iconColor = Colors[colorScheme ?? 'light'].icon;
@@ -46,7 +47,35 @@ export const More = () => {
   const { clearUser } = useAuth();
 
   const router = useRouter();
+  const handleOpenEmail = async () => {
+    const isAvailable = await MailComposer.isAvailableAsync();
+    if (!isAvailable) {
+      Alert.alert('Error', 'No email app is available on this device.');
+
+      return;
+    }
+
+    try {
+      const { status } = await MailComposer.composeAsync({
+        recipients: ['info@tss.sch.ng'],
+        subject: 'Feedback for TSS mobile app',
+        isHtml: false, // Set to true if using HTML content
+      });
+
+      if (status === 'sent') {
+        Alert.alert('Success', 'Email sent successfully!');
+      } else if (status === 'cancelled') {
+        console.log('Email cancelled by user');
+      }
+    } catch (error) {
+      console.log(error);
+
+      Alert.alert('Error', 'Failed to open email client.');
+    }
+  };
   const onPress = (id: string) => {
+    console.log(id);
+
     switch (id) {
       case 'profile':
         router.push('/profile');
@@ -56,6 +85,15 @@ export const More = () => {
         break;
       case 'delete':
         setShowDeleteModal(true);
+        break;
+      case 'contact':
+        WebBrowser.openBrowserAsync('https://tss.sch.ng/contact');
+        break;
+      case 'policy':
+        WebBrowser.openBrowserAsync('https://tss.sch.ng/privacy-policy');
+        break;
+      case 'feedback':
+        handleOpenEmail();
         break;
 
       default:

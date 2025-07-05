@@ -7,6 +7,7 @@ type Props = {
   isLoading?: boolean;
   onPress: () => void;
   disabled?: boolean;
+  w?: number;
 };
 
 export const Button = ({
@@ -14,6 +15,7 @@ export const Button = ({
   isLoading = false,
   onPress,
   disabled,
+  w = 30,
 }: Props) => {
   const { width } = useWindowDimensions();
   return (
@@ -21,7 +23,7 @@ export const Button = ({
       disabled={disabled}
       title={title}
       borderRadius={5}
-      width={width - 30}
+      width={width - w}
       height={55}
       isLoading={isLoading}
       onPress={onPress}

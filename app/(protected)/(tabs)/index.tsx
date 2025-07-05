@@ -9,7 +9,7 @@ export default function HomeScreen() {
 
   return (
     <Wrapper>
-      <ThemedText>{user?.name}</ThemedText>
+      <ThemedText>{user?.token}</ThemedText>
       <Button title="Logout" onPress={clearUser} />
     </Wrapper>
   );
