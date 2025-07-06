@@ -19,12 +19,11 @@ export const FetchEvents = ({
 }: Props) => {
   const token = useAuth((state) => state.user?.token!);
   const { width } = useWindowDimensions();
-  const { data, isError, isPending, error } = useFetchEvents({
+  const { data, isError, isPending } = useFetchEvents({
     page,
     pageSize,
     token,
   });
-  console.log(error?.message);
 
   if (isError) {
     throw new Error('Failed to get data');

@@ -1,4 +1,7 @@
+import { Colors } from '@/constants/Colors';
+import { NormalText } from '@/features/shared/components/typography';
 import { colors } from '@/features/shared/constants';
+import { useColorScheme } from '@/hooks/useColorScheme.web';
 import { Feather } from '@expo/vector-icons';
 import { Control, Controller, FieldErrors } from 'react-hook-form';
 import {
@@ -44,6 +47,8 @@ export const CustomInput = ({
   leftIcon,
   ...rest
 }: Props) => {
+  const colorScheme = useColorScheme();
+  const iconColor = Colors[colorScheme ?? 'light'].icon;
   const onPress = () => {
     if (toggleSecure) {
       toggleSecure();
@@ -54,7 +59,7 @@ export const CustomInput = ({
   };
   return (
     <View style={{ gap: 10 }}>
-      <Text style={{ fontFamily: 'NunitoBold' }}>{label}</Text>
+      <NormalText style={{ fontFamily: 'NunitoBold' }}>{label}</NormalText>
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       >
@@ -92,7 +97,7 @@ export const CustomInput = ({
               <Feather
                 name={secureTextEntry ? 'eye' : 'eye-off'}
                 size={25}
-                color={colors.black}
+                color={iconColor}
               />
             </TouchableOpacity>
           )}
