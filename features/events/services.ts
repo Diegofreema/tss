@@ -7,8 +7,10 @@ export const fetchEvents = async ({
   pageSize,
   token,
 }: EventFetchType) => {
-  const { data } = await axios.post<EventSuccessResponseType>(
-    `${baseUrl}/parents/events?page=${page}&pageSize=${pageSize}`,
+  console.log({ page, pageSize, token });
+
+  const { data } = await axios.get<EventSuccessResponseType>(
+    `${baseUrl}parents/events?page=${page}&pageSize=${2}`,
     {
       headers: {
         Authorization: `Bearer ${token}`,

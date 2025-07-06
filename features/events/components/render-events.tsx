@@ -1,3 +1,4 @@
+import { MediumText } from '@/features/shared/components/typography';
 import { LegendList, LegendListRenderItemProps } from '@legendapp/list';
 import React from 'react';
 import { View } from 'react-native';
@@ -23,6 +24,9 @@ export const RenderEvents = ({ data, horizontal }: Props) => {
         renderItem={renderItem}
         horizontal={horizontal}
         recycleItems
+        ListEmptyComponent={() => (
+          <MediumText style={{ textAlign: 'center' }}>No events yet</MediumText>
+        )}
       />
     </View>
   );
