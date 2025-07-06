@@ -49,6 +49,7 @@ export const CustomInput = ({
 }: Props) => {
   const colorScheme = useColorScheme();
   const iconColor = Colors[colorScheme ?? 'light'].icon;
+  const textColor = Colors[colorScheme ?? 'light'].text;
   const onPress = () => {
     if (toggleSecure) {
       toggleSecure();
@@ -75,7 +76,7 @@ export const CustomInput = ({
                     flex: 1,
                     fontFamily: 'NunitoRegular',
                     fontSize: 15,
-                    color: 'black',
+                    color: textColor,
                   },
                   rest.style,
                 ]}

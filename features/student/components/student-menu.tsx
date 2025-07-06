@@ -28,7 +28,14 @@ export const StudentMenu = ({ students }: Props) => {
       </DropdownMenu.Trigger>
       <DropdownMenu.Content>
         <DropdownMenu.Group>
-          {students?.map((item) => (
+          {[
+            {
+              regnum: 'LTS-2025-9551D',
+              fname: 'CHIDERA',
+              lname: 'IHOCHI',
+              classname: 'JSS1A',
+            },
+          ]?.map((item) => (
             <DropdownMenu.Item
               key={item.regnum}
               textValue={`${item.fname} ${item.lname}`}

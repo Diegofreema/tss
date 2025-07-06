@@ -2,8 +2,11 @@ import { FetchEvents } from '@/features/events/components/fetch-events';
 import { MediumText } from '@/features/shared/components/typography';
 import { Button } from '@/features/shared/components/ui/button';
 import { Wrapper } from '@/features/shared/components/ui/wrapper';
+import { FetchAssignments } from '@/features/student/components/fetch-assignments';
+import { FetchAttendance } from '@/features/student/components/fetch-attendance';
 import { FetchStudent } from '@/features/student/components/fetch-student';
 import { ErrorBoundaryProps } from 'expo-router';
+import { ScrollView } from 'react-native';
 export function ErrorBoundary({ error, retry }: ErrorBoundaryProps) {
   return (
     <Wrapper
@@ -16,9 +19,16 @@ export function ErrorBoundary({ error, retry }: ErrorBoundaryProps) {
 }
 export default function HomeScreen() {
   return (
-    <Wrapper style={{ gap: 20 }}>
-      <FetchStudent />
-      <FetchEvents horizontal />
+    <Wrapper>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ gap: 20, paddingBottom: 50 }}
+      >
+        <FetchStudent />
+        <FetchAssignments />
+        <FetchAttendance />
+        <FetchEvents horizontal />
+      </ScrollView>
     </Wrapper>
   );
 }
