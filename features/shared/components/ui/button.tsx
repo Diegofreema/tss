@@ -8,6 +8,7 @@ type Props = {
   onPress: () => void;
   disabled?: boolean;
   w?: number;
+  height?: number;
 };
 
 export const Button = ({
@@ -16,6 +17,7 @@ export const Button = ({
   onPress,
   disabled,
   w = 30,
+  height = 55,
 }: Props) => {
   const { width } = useWindowDimensions();
   return (
@@ -24,7 +26,7 @@ export const Button = ({
       title={title}
       borderRadius={5}
       width={width - w}
-      height={55}
+      height={height}
       isLoading={isLoading}
       onPress={onPress}
       style={{ backgroundColor: colors.purple }}

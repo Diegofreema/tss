@@ -1,13 +1,9 @@
-import {View} from 'react-native';
+import { View } from 'react-native';
 
 type Props = {
-    size?: number;
-}
+  size?: number;
+};
 
-export const Spacer = ({size = 20}: Props) => {
-    return (
-        <View style={{height: size}} />
-
-
-    );
+export const Spacer = ({ size = 20 }: Props) => {
+  return <View style={{ height: size }} />;
 };

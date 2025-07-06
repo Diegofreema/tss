@@ -1,15 +1,22 @@
-import { ThemedText } from '@/features/shared/components/ThemedText';
+import { FetchEvents } from '@/features/events/components/fetch-events';
+import { MediumText } from '@/features/shared/components/typography';
 import { Button } from '@/features/shared/components/ui/button';
 import { Wrapper } from '@/features/shared/components/ui/wrapper';
-import { useAuth } from '@/features/shared/store/use-auth';
-
+import { ErrorBoundaryProps } from 'expo-router';
+export function ErrorBoundary({ error, retry }: ErrorBoundaryProps) {
+  return (
+    <Wrapper
+      style={{ alignItems: 'center', justifyContent: 'center', gap: 10 }}
+    >
+      <MediumText>{error.message}</MediumText>
+      <Button title="Retry" onPress={retry} height={50} />
+    </Wrapper>
+  );
+}
 export default function HomeScreen() {
-  const { user, clearUser } = useAuth();
-
   return (
     <Wrapper>
-      <ThemedText>{user?.token}</ThemedText>
-      <Button title="Logout" onPress={clearUser} />
+      <FetchEvents />
     </Wrapper>
   );
 }
