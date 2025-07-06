@@ -20,18 +20,7 @@ export const RenderEvents = ({ data, horizontal, height, width }: Props) => {
   return (
     <View style={{ flex: 1 }}>
       <LegendList
-        data={[
-          {
-            events: 'Exam start',
-            date1: '2024-07-15T00:00:00.000Z',
-            ref: 'DDSWYEHRHT',
-          },
-          {
-            events: 'INTER-HOUSE SPORT',
-            date1: '2024-03-09T00:00:00.000Z',
-            ref: 'EQWIBXADTG',
-          },
-        ]}
+        data={data.data}
         renderItem={renderItem}
         horizontal={horizontal}
         keyExtractor={(item, i) => item.ref}

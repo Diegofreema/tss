@@ -1,7 +1,7 @@
 export type StudentSuccessResponseType = {
   success: boolean;
   message: string;
-  data: [];
+  data: StudentType[];
 };
 
 export type StudentType = {
