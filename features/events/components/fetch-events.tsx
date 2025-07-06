@@ -35,7 +35,7 @@ export const FetchEvents = ({
     return (
       <LoadingLists
         horizontal
-        renderItem={() => <LoadingCard width={_width} height={200} />}
+        renderItem={() => <LoadingCard width={_width} height={150} />}
       />
     );
   }
@@ -43,7 +43,12 @@ export const FetchEvents = ({
   return (
     <Stack flex={1}>
       <MediumText style={{ marginBottom: 20 }}>Upcoming Events</MediumText>
-      <RenderEvents data={data} horizontal={horizontal} />
+      <RenderEvents
+        data={data}
+        horizontal={horizontal}
+        width={_width}
+        height={150}
+      />
     </Stack>
   );
 };

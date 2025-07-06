@@ -16,7 +16,7 @@ export function ErrorBoundary({ error, retry }: ErrorBoundaryProps) {
 export default function HomeScreen() {
   return (
     <Wrapper>
-      <FetchEvents />
+      <FetchEvents horizontal />
     </Wrapper>
   );
 }

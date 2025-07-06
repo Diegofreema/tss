@@ -1,7 +1,14 @@
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme.web';
 import React, { Children, ReactNode } from 'react';
-import { Dimensions, StyleSheet, TouchableOpacity, View } from 'react-native';
+import {
+  Dimensions,
+  StyleProp,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  ViewStyle,
+} from 'react-native';
 import { ThemedView } from './ThemedView';
 import { Stack } from './ui/stack';
 
@@ -9,23 +16,23 @@ const { width } = Dimensions.get('window');
 
 interface CardProps {
   children: ReactNode;
-  style?: object;
+  style?: StyleProp<ViewStyle>;
   onPress?: () => void;
 }
 
 interface CardHeaderProps {
   children: ReactNode;
-  style?: object;
+  style?: StyleProp<ViewStyle>;
 }
 
 interface CardContentProps {
   children: ReactNode;
-  style?: object;
+  style?: StyleProp<ViewStyle>;
 }
 
 interface CardFooterProps {
   children: ReactNode;
-  style?: object;
+  style?: StyleProp<ViewStyle>;
 }
 
 export const Card = ({ children, style, onPress }: CardProps) => {
