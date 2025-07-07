@@ -75,7 +75,7 @@ export const BottomSheetComponent = forwardRef<BottomSheetModal, Props>(
               justifyContent="space-between"
             >
               <MediumText>Filter</MediumText>
-              <CustomPressable onPress={onClose}>
+              <CustomPressable onPress={onClose} style={styles.press}>
                 <FontAwesome name="times" color={iconColor} size={23} />
               </CustomPressable>
             </Stack>
@@ -131,5 +131,14 @@ const styles = StyleSheet.create({
     height: 50,
     justifyContent: 'center',
     borderRadius: 5,
+  },
+  press: {
+    width: 40,
+    height: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 20,
+    borderColor: colors.grey,
+    borderWidth: 1,
   },
 });

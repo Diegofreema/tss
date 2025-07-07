@@ -11,8 +11,9 @@ type Props = {
   data: string[];
   onSelect: (value: string) => void;
   value: string;
+  flex?: number;
 };
-export const CustomSelect = ({ data, onSelect, value }: Props) => {
+export const CustomSelect = ({ data, onSelect, value, flex = 1 }: Props) => {
   const colorScheme = useColorScheme();
   const iconColor = Colors[colorScheme ?? 'light'].icon;
 
@@ -26,9 +27,7 @@ export const CustomSelect = ({ data, onSelect, value }: Props) => {
         }}
       >
         <Stack direction="row" gap={5} alignItems="center">
-          <NormalText style={{ flex: 1 }}>
-            {value ?? 'Select a value'}
-          </NormalText>
+          <NormalText style={{ flex }}>{value ?? 'Select a value'}</NormalText>
           <Entypo name="chevron-small-down" size={20} color={iconColor} />
         </Stack>
       </DropdownMenu.Trigger>

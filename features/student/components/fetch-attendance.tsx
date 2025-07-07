@@ -28,7 +28,7 @@ export const FetchAttendance = () => {
   }
 
   if (isPending || isPendingTerms) {
-    return <LoadingCard height={200} width={cardWidth} />;
+    return <LoadingCard height={250} width={cardWidth} />;
   }
 
   console.log(data.data);
