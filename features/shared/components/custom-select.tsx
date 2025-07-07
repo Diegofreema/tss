@@ -26,7 +26,9 @@ export const CustomSelect = ({ data, onSelect, value }: Props) => {
         }}
       >
         <Stack direction="row" gap={5} alignItems="center">
-          <NormalText>{value ?? 'Select a value'}</NormalText>
+          <NormalText style={{ flex: 1 }}>
+            {value ?? 'Select a value'}
+          </NormalText>
           <Entypo name="chevron-small-down" size={20} color={iconColor} />
         </Stack>
       </DropdownMenu.Trigger>

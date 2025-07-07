@@ -31,7 +31,7 @@ export type FetchAttendanceResponseType = {
   data: AttendanceType[];
 };
 
-export const TermType = ['First Term', 'Second Term', 'Third Term'] as const;
+export const TermType = ['First Term', 'Second Term', 'Third Term'];
 export type TermSingleType = (typeof TermType)[number];
 export type TermTypeKey = keyof typeof TermType;
 export type FetchTermResponseType = {

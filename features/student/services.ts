@@ -107,3 +107,14 @@ export const fetchSession = async ({ token }: FetchSessionType) => {
   );
   return data;
 };
+export const fetchClasses = async ({ token }: FetchSessionType) => {
+  const { data } = await axios.get<FetchSessionResponseType>(
+    `${baseUrl}parents/filters/classes`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  return data;
+};
