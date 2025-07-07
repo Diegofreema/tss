@@ -16,6 +16,8 @@ export const useLogin = () => {
       toast(`Success, welcome back ${data.data.fname} `, 'success');
     },
     onError: (error) => {
+      console.log(error.message);
+
       if (error.message === 'Request failed with status code 401') {
         toast(`Invalid credentials`, 'error');
       } else {

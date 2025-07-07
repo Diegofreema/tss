@@ -10,3 +10,9 @@ export type StudentType = {
   lname: string;
   classname: string;
 };
+
+export type FetchAttendanceType = {
+  token?: string;
+  regnum: string;
+  term: string;
+};
