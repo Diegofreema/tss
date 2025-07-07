@@ -5,6 +5,8 @@ import {
   FetchAttendanceType,
   FetchCAResponseType,
   FetchCAType,
+  FetchSessionResponseType,
+  FetchSessionType,
   FetchTermResponseType,
   FetchTestSummaryResponseType,
   FetchTestSummaryType,
@@ -78,11 +80,25 @@ export const fetchCA = async ({
   term,
   token,
 }: FetchCAType) => {
+  console.log({ classname, regnum, session, term, token });
+
   const { data } = await axios.post<FetchCAResponseType>(
-    `${baseUrl}parents/student/ca?session=${encodeURI(session)}N&classname=${encodeURI(classname)}&term=${encodeURI(term)}`,
+    `${baseUrl}parents/student/ca?session=${encodeURI(session)}&classname=${encodeURI(classname)}&term=${encodeURI(term)}`,
     {
       regnum,
     },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  return data;
+};
+
+export const fetchSession = async ({ token }: FetchSessionType) => {
+  const { data } = await axios.get<FetchSessionResponseType>(
+    `${baseUrl}parents/filters/sessions`,
     {
       headers: {
         Authorization: `Bearer ${token}`,

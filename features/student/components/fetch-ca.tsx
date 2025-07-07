@@ -1,15 +1,19 @@
 import { Colors } from '@/constants/Colors';
+import { LoadingBar } from '@/features/shared/components/loading-bar';
 import { LoadingCard } from '@/features/shared/components/loading-card';
 import { LoadingLists } from '@/features/shared/components/loading-lists';
 import { CustomPressable } from '@/features/shared/components/ui/custom-pressable';
 import { Stack } from '@/features/shared/components/ui/stack';
 import { useColorScheme } from '@/hooks/useColorScheme.web';
 import { Ionicons } from '@expo/vector-icons';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Dimensions, StyleSheet, TextInput, View } from 'react-native';
 import { useGetCA } from '../api/use-get-ca';
+import { useGetSession } from '../api/use-get-session';
+import { useGetTerms } from '../api/user-get-terms';
 import { useStudent } from '../store/useStudent';
-import { RenderCa } from './render-ca';
+import { TermSingleType } from '../types';
+import { RenderCAs } from './render-ca';
 
 const { width } = Dimensions.get('window');
 export const FetchCa = () => {
@@ -18,9 +22,28 @@ export const FetchCa = () => {
   const textColor = Colors[colorScheme ?? 'light'].text;
   const borderColor = Colors[colorScheme ?? 'light'].cardBorder;
   const student = useStudent((state) => state.student);
+  const {
+    data: terms,
+    isPending: isPendingTerms,
+    isError: isErrorTerms,
+  } = useGetTerms();
+  const {
+    data: sessionData,
+    isError: isErrorSession,
+    isPending: isPendingSession,
+  } = useGetSession();
   const [value, setValue] = useState('');
   const [session, setSession] = useState('');
-  const [term, setTerm] = useState('');
+
+  const [term, setTerm] = useState<TermSingleType>(
+    (terms?.data[0] as TermSingleType) ?? 'First Term'
+  );
+  useEffect(() => {
+    if (!isErrorSession && !isPendingSession && sessionData) {
+      // Set the session to the first available session if not already set
+      setSession(sessionData.data[0]);
+    }
+  }, [sessionData, isErrorSession, isPendingSession]);
   const { data, isPending, isError } = useGetCA({
     classname: student?.classname!,
     session,
@@ -28,18 +51,26 @@ export const FetchCa = () => {
     regnum: student?.regnum!,
   });
 
-  if (isError) {
-    throw new Error('Error fetching CA');
+  if (isError || isErrorSession || isErrorTerms) {
+    throw new Error('Error fetching data');
   }
 
-  if (isPending) {
+  if (isPending || isPendingSession || isPendingTerms) {
     return (
-      <LoadingLists
-        horizontal={false}
-        renderItem={() => <LoadingCard width={width - 30} height={200} />}
-      />
+      <Stack gap={10}>
+        <LoadingBar />
+        <LoadingLists
+          horizontal={false}
+          renderItem={() => <LoadingCard width={width - 30} height={200} />}
+        />
+      </Stack>
     );
   }
+  console.log({ data, sessionData });
+  const dataToRender =
+    data?.data.filter((item) =>
+      item.subjectName.toLowerCase().includes(value.toLowerCase())
+    ) || [];
   return (
     <View style={{ flex: 1, gap: 10 }}>
       <Stack
@@ -62,7 +93,7 @@ export const FetchCa = () => {
             style={{ marginRight: 10 }}
           />
           <TextInput
-            placeholder={'Search...'}
+            placeholder={'Search by subject name...'}
             style={[styles.input, { color: textColor }]}
             placeholderTextColor={textColor}
             value={value}
@@ -74,7 +105,7 @@ export const FetchCa = () => {
           <Ionicons name="filter" size={24} color={iconColor} />
         </CustomPressable>
       </Stack>
-      <RenderCa />
+      <RenderCAs data={dataToRender} />
     </View>
   );
 };

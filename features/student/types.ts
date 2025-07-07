@@ -39,7 +39,11 @@ export type FetchTermResponseType = {
   message: 'Terms fetched successfully';
   data: typeof TermType;
 };
-
+export type FetchSessionResponseType = {
+  success: boolean;
+  message: string;
+  data: string[];
+};
 export type FetchTestSummaryType = {
   token?: string;
   regnum: string;
@@ -77,4 +81,8 @@ export type FetchCAType = {
   term: string;
   regnum: string;
   token?: string;
+};
+
+export type FetchSessionType = {
+  token: string;
 };

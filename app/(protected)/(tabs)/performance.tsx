@@ -4,7 +4,7 @@ import React from 'react';
 
 const PerformanceScreen = () => {
   return (
-    <Wrapper>
+    <Wrapper style={{ flex: 1 }}>
       <FetchCa />
     </Wrapper>
   );
