@@ -1,3 +1,4 @@
+import { CustomSelect } from '@/features/shared/components/custom-select';
 import { ThemedView } from '@/features/shared/components/ThemedView';
 import { Title } from '@/features/shared/components/title';
 import { Stack } from '@/features/shared/components/ui/stack';
@@ -10,11 +11,19 @@ type Props = {
 };
 
 export const RenderAttendance = ({ data, setTerm, term }: Props) => {
-  console.log('Attendance Data:', data);
+  console.log({ term });
 
   return (
     <Stack backgroundColor="transparent" gap={10}>
-      <Title title="Attendance" />
+      <Stack direction="row" justifyContent="space-between" alignItems="center">
+        <Title title="Attendance" />
+        <CustomSelect
+          value={term}
+          data={data.map((item) => item.term)}
+          onSelect={(value) => setTerm(value as TermSingleType)}
+        />
+      </Stack>
+
       <ThemedView style={{ minHeight: 250 }}></ThemedView>
     </Stack>
   );

@@ -11,13 +11,15 @@ import { StudentMenu } from './student-menu';
 export const FetchStudent = () => {
   const fname = useAuth((state) => state.user?.fname!);
   const getStudent = useStudent((state) => state.getStudent);
-  const { data, isPending, isError } = useGetStudent();
+  const { data, isPending, isError, error } = useGetStudent();
 
   useEffect(() => {
     if (!isError && !isPending && Array.isArray(data?.data)) {
       getStudent(data?.data[0]);
     }
   }, [isError, isPending, data?.data, getStudent]);
+  console.log({ error: error?.message });
+
   if (isError) {
     throw new Error('Failed to get data');
   }

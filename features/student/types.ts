@@ -39,3 +39,42 @@ export type FetchTermResponseType = {
   message: 'Terms fetched successfully';
   data: typeof TermType;
 };
+
+export type FetchTestSummaryType = {
+  token?: string;
+  regnum: string;
+  classname: string;
+};
+
+export type FetchTestSummaryResponseType = {
+  success: boolean;
+  message: string;
+  data: [];
+};
+
+export type CAType = {
+  subjectid: string;
+  subjectName: string;
+  classes: string;
+  sessions: string;
+  terms: string;
+  ca1: number;
+  ca2: number;
+  ca3: number;
+  exam: number;
+  total: number;
+};
+
+export type FetchCAResponseType = {
+  success: boolean;
+  message: string;
+  data: CAType[];
+};
+
+export type FetchCAType = {
+  session: string;
+  classname: string;
+  term: string;
+  regnum: string;
+  token?: string;
+};

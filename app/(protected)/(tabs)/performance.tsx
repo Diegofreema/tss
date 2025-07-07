@@ -1,11 +1,12 @@
+import { Wrapper } from '@/features/shared/components/ui/wrapper';
+import { FetchCa } from '@/features/student/components/fetch-ca';
 import React from 'react';
-import { Text, View } from 'react-native';
 
 const PerformanceScreen = () => {
   return (
-    <View>
-      <Text>PerformanceScreen</Text>
-    </View>
+    <Wrapper>
+      <FetchCa />
+    </Wrapper>
   );
 };
 

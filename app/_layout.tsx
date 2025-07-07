@@ -1,6 +1,7 @@
 import { ToastProviderWithViewport } from '@/components/toast';
 import { useAuth } from '@/features/shared/store/use-auth';
 import { useTheme } from '@/features/shared/store/useTheme';
+import '@/global.css'; // Ensure global styles are imported
 import { useColorScheme } from '@/hooks/useColorScheme';
 import NetInfo from '@react-native-community/netinfo';
 import {
@@ -21,7 +22,6 @@ import { useEffect } from 'react';
 import { Appearance } from 'react-native';
 import 'react-native-gesture-handler';
 import 'react-native-reanimated';
-
 const queryClient = new QueryClient();
 SplashScreen.preventAutoHideAsync();
 onlineManager.setEventListener((setOnline) => {

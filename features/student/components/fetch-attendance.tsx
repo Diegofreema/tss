@@ -24,12 +24,14 @@ export const FetchAttendance = () => {
   const { width } = useWindowDimensions();
   const cardWidth = width - 30; // Assuming a margin of 20 on each side
   if (isError || isErrorTerms) {
-    throw new Error('Failed to fetch data');
+    throw new Error('Failed to fetch attendance data');
   }
 
   if (isPending || isPendingTerms) {
     return <LoadingCard height={200} width={cardWidth} />;
   }
+
+  console.log(data.data);
 
   return <RenderAttendance data={data.data} setTerm={setTerm} term={term} />;
 };
