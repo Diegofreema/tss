@@ -15,7 +15,7 @@ type Props = {
 };
 export const AuthTitle = ({ subTitle, title, href, linkText }: Props) => {
   return (
-    <ThemedView>
+    <ThemedView style={{ backgroundColor: 'transparent' }}>
       <MediumText>{title}</MediumText>
       {subTitle && (
         <NormalText style={{ fontSize: RFValue(10) }}>

@@ -16,3 +16,26 @@ export type FetchAttendanceType = {
   regnum: string;
   term: string;
 };
+
+export type AttendanceType = {
+  class: string;
+  date: string;
+  present: boolean;
+  session: string;
+  term: string;
+};
+
+export type FetchAttendanceResponseType = {
+  success: boolean;
+  message: string;
+  data: AttendanceType[];
+};
+
+export const TermType = ['First Term', 'Second Term', 'Third Term'] as const;
+export type TermSingleType = (typeof TermType)[number];
+export type TermTypeKey = keyof typeof TermType;
+export type FetchTermResponseType = {
+  success: true;
+  message: 'Terms fetched successfully';
+  data: typeof TermType;
+};

@@ -1,10 +1,6 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { RenderAssignments } from './render-assignment';
 
 export const FetchAssignments = () => {
-  return (
-    <View>
-      <Text>FetchAssignments</Text>
-    </View>
-  );
+  return <RenderAssignments />;
 };

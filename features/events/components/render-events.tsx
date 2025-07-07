@@ -17,12 +17,14 @@ export const RenderEvents = ({ data, horizontal, height, width }: Props) => {
     <RenderEvent item={item} height={height} width={width} />
   );
 
+  const isHorizontal = !!horizontal && data.data.length > 0;
+
   return (
     <View style={{ flex: 1 }}>
       <LegendList
         data={data.data}
         renderItem={renderItem}
-        horizontal={horizontal}
+        horizontal={isHorizontal}
         keyExtractor={(item, i) => item.ref}
         contentContainerStyle={{ gap: 15 }}
         showsHorizontalScrollIndicator={false}

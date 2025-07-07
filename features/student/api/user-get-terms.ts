@@ -1,15 +1,14 @@
 import { useAuth } from '@/features/shared/store/use-auth';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
-import { fetchAttendance } from '../services';
-import { FetchAttendanceType } from '../types';
+import { fetchTerm } from '../services';
 
-export const useGetAttendance = ({ regnum, term }: FetchAttendanceType) => {
+export const useGetTerms = () => {
   const token = useAuth((state) => state.user?.token!);
 
   return useQuery({
-    queryKey: ['attendance', token, regnum, term],
+    queryKey: ['terms', token],
     queryFn: async () => {
-      return await fetchAttendance({ token, regnum, term });
+      return await fetchTerm({ token });
     },
     retry: 3,
     placeholderData: keepPreviousData,

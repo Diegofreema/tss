@@ -1,6 +1,6 @@
 import { LoadingCard } from '@/features/shared/components/loading-card';
 import { LoadingLists } from '@/features/shared/components/loading-lists';
-import { MediumText } from '@/features/shared/components/typography';
+import { Title } from '@/features/shared/components/title';
 import { Stack } from '@/features/shared/components/ui/stack';
 import { useAuth } from '@/features/shared/store/use-auth';
 import React from 'react';
@@ -40,8 +40,8 @@ export const FetchEvents = ({
   }
 
   return (
-    <Stack flex={1}>
-      <MediumText style={{ marginBottom: 20 }}>Upcoming Events</MediumText>
+    <Stack flex={1} gap={20} backgroundColor="transparent">
+      <Title title="Upcoming Events" />
       <RenderEvents
         data={data}
         horizontal={horizontal}
