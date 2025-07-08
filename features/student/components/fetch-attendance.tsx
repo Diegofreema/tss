@@ -1,4 +1,6 @@
+import { LoadingBar } from '@/features/shared/components/loading-bar';
 import { LoadingCard } from '@/features/shared/components/loading-card';
+import { Spacer } from '@/features/shared/components/spacer';
 import React from 'react';
 import { useWindowDimensions } from 'react-native';
 import { useGetAttendance } from '../api/use-get-attendance';
@@ -28,7 +30,13 @@ export const FetchAttendance = () => {
   }
 
   if (isPending || isPendingTerms) {
-    return <LoadingCard height={250} width={cardWidth} />;
+    return (
+      <>
+        <LoadingBar />
+        <Spacer size={8} />
+        <LoadingCard height={250} width={cardWidth} />
+      </>
+    );
   }
 
   return <RenderAttendance data={data.data} setTerm={setTerm} term={term} />;
