@@ -1,4 +1,4 @@
-import { DimensionValue } from 'react-native';
+import { DimensionValue, StyleProp, ViewStyle } from 'react-native';
 
 export type StackProps = {
   direction?: 'row' | 'column'; // Flex direction
@@ -24,7 +24,7 @@ export type StackProps = {
   flexWrap?: 'wrap' | 'nowrap'; // Flex wrap
   backgroundColor?: string; // Background color
   flex?: number; // Flex
-  style?: object; // Custom style override
+  style?: StyleProp<ViewStyle>; // Custom style override
   width?: DimensionValue;
 };
 

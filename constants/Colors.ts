@@ -20,6 +20,7 @@ export const Colors = {
     title: '#000',
     card: '#fff',
     cardBorder: '#f5f5f5',
+    question: colors.purple,
   },
   dark: {
     text: '#ECEDEE',
@@ -32,5 +33,6 @@ export const Colors = {
     title: '#fff',
     card: '#161B22',
     cardBorder: '#21262D',
+    question: colors.white,
   },
 };

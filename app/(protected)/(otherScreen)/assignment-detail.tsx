@@ -1,8 +1,8 @@
+import { FetchAssignments } from '@/features/assignments/components/fetch-assignments';
 import { Wrapper } from '@/features/shared/components/ui/wrapper';
-import { FetchAssignments } from '@/features/student/components/fetch-assignments';
 import React from 'react';
 
-const AssignmentScreen = () => {
+const AssignmentDetailScreen = () => {
   return (
     <Wrapper>
       <FetchAssignments />
@@ -10,4 +10,4 @@ const AssignmentScreen = () => {
   );
 };
 
-export default AssignmentScreen;
+export default AssignmentDetailScreen;

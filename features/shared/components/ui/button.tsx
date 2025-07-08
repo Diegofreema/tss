@@ -9,6 +9,7 @@ type Props = {
   disabled?: boolean;
   w?: number;
   height?: number;
+  _width?: number;
 };
 
 export const Button = ({
@@ -18,18 +19,20 @@ export const Button = ({
   disabled,
   w = 30,
   height = 55,
+  _width,
 }: Props) => {
   const { width } = useWindowDimensions();
+  const _widthValue = _width || width; // Default to full width minus padding if _width is not provided
   return (
     <ExpandableButton
       disabled={disabled}
       title={title}
       borderRadius={5}
-      width={width - w}
+      width={_widthValue - w}
       height={height}
       isLoading={isLoading}
       onPress={onPress}
-      style={{ backgroundColor: colors.purple }}
+      style={{ backgroundColor: colors.purple, opacity: disabled ? 0.5 : 1 }}
     />
   );
 };

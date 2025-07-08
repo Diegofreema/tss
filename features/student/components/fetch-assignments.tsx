@@ -5,7 +5,10 @@ import { useGetTest } from '../api/use-get-test';
 import { useStudent } from '../store/useStudent';
 import { RenderAssignments } from './render-assignment';
 
-export const FetchAssignments = () => {
+type Props = {
+  horizontal?: boolean;
+};
+export const FetchAssignments = ({ horizontal }: Props) => {
   const student = useStudent((state) => state.student);
   const { data, isPending, isError } = useGetTest({
     classname: student?.classname!,

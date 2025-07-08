@@ -1,13 +1,17 @@
 import { Colors } from '@/constants/Colors';
-import { ThemedView } from '@/features/shared/components/ThemedView';
 import { CustomPressable } from '@/features/shared/components/ui/custom-pressable';
 import { colors } from '@/features/shared/constants';
 import { useColorScheme } from '@/hooks/useColorScheme.web';
 import { Feather } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { StyleSheet } from 'react-native';
+import { NormalText } from '../typography';
+import { Stack } from './stack';
 
-export const Header = () => {
+type Props = {
+  title?: string;
+};
+export const Header = ({ title }: Props) => {
   const router = useRouter();
   const colorScheme = useColorScheme();
   const iconColor = Colors[colorScheme ?? 'light'].icon;
@@ -17,11 +21,18 @@ export const Header = () => {
     }
   };
   return (
-    <ThemedView style={styles.container}>
+    <Stack
+      style={styles.container}
+      direction="row"
+      justifyContent="space-between"
+      alignItems="center"
+    >
       <CustomPressable onPress={onPress} style={styles.button}>
         <Feather name="chevrons-left" size={24} color={iconColor} />
       </CustomPressable>
-    </ThemedView>
+      {title && <NormalText>{title}</NormalText>}
+      <Stack width={50} />
+    </Stack>
   );
 };
 
