@@ -31,7 +31,5 @@ export const FetchAttendance = () => {
     return <LoadingCard height={250} width={cardWidth} />;
   }
 
-  console.log(data.data);
-
   return <RenderAttendance data={data.data} setTerm={setTerm} term={term} />;
 };

@@ -49,6 +49,11 @@ export type FetchTestSummaryType = {
   regnum: string;
   classname: string;
 };
+export type FetchAssignmentResponseType = {
+  token?: string;
+  regnum: string;
+  testid: string;
+};
 
 export type FetchTestSummaryResponseType = {
   success: boolean;
@@ -85,4 +90,27 @@ export type FetchCAType = {
 
 export type FetchSessionType = {
   token: string;
+};
+
+export type FetchAssignmentSuccessResponseType = {
+  success: boolean;
+  message: string;
+  data: {
+    testid: string;
+    regnum: string;
+    subjectName: string;
+    assessment: string;
+    session: string;
+    totalQuestions: number;
+    currentQuestion: number;
+  };
+  questions: QuestionType[];
+};
+export type QuestionType = {
+  numberz: number;
+  question: string;
+  OptionA: string;
+  OptionB: string;
+  OptionC: string;
+  answer: string;
 };

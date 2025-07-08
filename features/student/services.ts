@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { baseUrl } from '../shared/constants';
 import {
+  FetchAssignmentResponseType,
+  FetchAssignmentSuccessResponseType,
   FetchAttendanceResponseType,
   FetchAttendanceType,
   FetchCAResponseType,
@@ -110,6 +112,25 @@ export const fetchSession = async ({ token }: FetchSessionType) => {
 export const fetchClasses = async ({ token }: FetchSessionType) => {
   const { data } = await axios.get<FetchSessionResponseType>(
     `${baseUrl}parents/filters/classes`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  return data;
+};
+export const fetchAssignments = async ({
+  token,
+  regnum,
+  testid,
+}: FetchAssignmentResponseType) => {
+  const { data } = await axios.post<FetchAssignmentSuccessResponseType>(
+    `${baseUrl}parents/test-assignments`,
+    {
+      regnum,
+      testid,
+    },
     {
       headers: {
         Authorization: `Bearer ${token}`,
