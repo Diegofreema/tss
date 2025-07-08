@@ -4,7 +4,7 @@ import { Stack } from './ui/stack';
 
 type Props = {
   leftText: string;
-  rightText: string;
+  rightText: string | number;
 };
 
 export const FlexText = ({ leftText, rightText }: Props) => {

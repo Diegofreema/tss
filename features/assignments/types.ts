@@ -27,3 +27,29 @@ export type FetchAssignmentResponseType = {
   regnum: string;
   testid: string;
 };
+export type Answer = {
+  numberz: number;
+  yourAnswer: string;
+};
+
+export type SubmitAssignmentsType = {
+  token?: string;
+  regnum: string;
+  testid: string;
+  answers: Answer[];
+};
+export type SubmitAssignmentType = {
+  studentName: string;
+  classname: string;
+  subject: string;
+  session: string;
+  totalQuestions: number;
+  attempted: number;
+  correct: number;
+  scoreSummary: string;
+};
+export type SubmitAssignmentResponseType = {
+  success: boolean;
+  message: string;
+  data: SubmitAssignmentType;
+};

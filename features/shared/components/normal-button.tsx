@@ -18,7 +18,7 @@ export const NormalButton = ({ onPress, buttonText, disabled }: Props) => {
       ]}
       disabled={disabled}
     >
-      <NormalText>{buttonText}</NormalText>
+      <NormalText style={{ color: colors.white }}>{buttonText}</NormalText>
     </CustomPressable>
   );
 };
