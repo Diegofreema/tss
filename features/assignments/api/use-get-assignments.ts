@@ -1,6 +1,7 @@
 import { useAuth } from '@/features/shared/store/use-auth';
 import { useQuery } from '@tanstack/react-query';
-import { fetchAssignments } from '../services';
+
+import { fetchAssignments } from '../service';
 import { FetchAssignmentResponseType } from '../types';
 
 export const useGetAssignments = ({

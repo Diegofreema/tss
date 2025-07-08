@@ -19,15 +19,15 @@ const ATTENDANCE_COLORS = {
 } as const;
 
 // Define legend items
-interface LegendItem {
-  color: string;
-  label: string;
-}
-interface AttendanceCalendarProps {
-  attendanceData?: AttendanceType[];
-  title?: string;
-  subtitle?: string;
-}
+// interface LegendItem {
+//   color: string;
+//   label: string;
+// }
+// interface AttendanceCalendarProps {
+//   attendanceData?: AttendanceType[];
+//   title?: string;
+//   subtitle?: string;
+// }
 
 // Define the marked date configuration
 interface MarkedDateConfig {
@@ -35,12 +35,12 @@ interface MarkedDateConfig {
   selectedColor: string;
   selectedTextColor: string;
 }
-const LEGEND_ITEMS: LegendItem[] = [
-  { color: ATTENDANCE_COLORS.PRESENT, label: 'Present' },
-  { color: ATTENDANCE_COLORS.ABSENT, label: 'Absent' },
-  { color: ATTENDANCE_COLORS.CLASS_DAY, label: 'Class Day (No Data)' },
-  { color: ATTENDANCE_COLORS.NO_CLASS, label: 'No Class' },
-];
+// const LEGEND_ITEMS: LegendItem[] = [
+//   { color: ATTENDANCE_COLORS.PRESENT, label: 'Present' },
+//   { color: ATTENDANCE_COLORS.ABSENT, label: 'Absent' },
+//   { color: ATTENDANCE_COLORS.CLASS_DAY, label: 'Class Day (No Data)' },
+//   { color: ATTENDANCE_COLORS.NO_CLASS, label: 'No Class' },
+// ];
 
 type Props = {
   data: AttendanceType[];

@@ -1,11 +1,12 @@
+import { FetchAssignments } from '@/features/assignments/components/fetch-assignments';
+import { Wrapper } from '@/features/shared/components/ui/wrapper';
 import React from 'react';
-import { Text, View } from 'react-native';
 
 const AssignmentScreen = () => {
   return (
-    <View>
-      <Text>AssignmentScreen</Text>
-    </View>
+    <Wrapper>
+      <FetchAssignments />
+    </Wrapper>
   );
 };
 
