@@ -1,4 +1,5 @@
 import { LoadingCard } from '@/features/shared/components/loading-card';
+import { LoadingLists } from '@/features/shared/components/loading-lists';
 import { Title } from '@/features/shared/components/title';
 import { Stack } from '@/features/shared/components/ui/stack';
 import { colors } from '@/features/shared/constants';
@@ -26,22 +27,33 @@ export const FetchAssignments = ({ carousel }: Props) => {
     console.log('Failed to fetch assignments data');
   }
   if (isPending) {
-    return <LoadingCard height={200} width={width - 30} />;
+    return (
+      <LoadingLists
+        renderItem={() => <LoadingCard height={200} width={width - 30} />}
+        length={carousel ? 1 : 4}
+      />
+    );
   }
 
   console.log({ data });
 
   return (
-    <Stack>
-      <Stack direction="row" alignItems="center" justifyContent="space-between">
-        <Title title="Assignments" />
-        <Link
-          href="/assignments"
-          style={{ color: colors.purple, fontSize: RFValue(9) }}
+    <Stack flex={1}>
+      {carousel && (
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
         >
-          See All &gt;
-        </Link>
-      </Stack>
+          <Title title="Assignments" />
+          <Link
+            href="/assignments"
+            style={{ color: colors.purple, fontSize: RFValue(9) }}
+          >
+            See All &gt;
+          </Link>
+        </Stack>
+      )}
       {carousel ? (
         <AssignmentsCarousel
           data={[
