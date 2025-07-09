@@ -25,7 +25,7 @@ export default function HomeScreen() {
         contentContainerStyle={{ gap: 20, paddingBottom: 50 }}
       >
         <FetchStudent />
-        <FetchAssignments />
+        <FetchAssignments carousel />
         <FetchAttendance />
         <FetchEvents horizontal />
       </ScrollView>

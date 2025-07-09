@@ -47,13 +47,21 @@ export type FetchSessionResponseType = {
 export type FetchTestSummaryType = {
   token?: string;
   regnum: string;
-  classname: string;
 };
-
+export type SummaryType = {
+  testid: string;
+  assesment: string;
+  date1: string;
+  date2: string;
+  subjectName: string;
+  regnum: string;
+  studentName: string;
+};
 export type FetchTestSummaryResponseType = {
   success: boolean;
   message: string;
-  data: [];
+  session: string;
+  data: SummaryType[];
 };
 
 export type CAType = {

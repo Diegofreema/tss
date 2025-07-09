@@ -6,5 +6,5 @@ type TitleProps = {
 };
 
 export const Title = ({ title }: TitleProps) => {
-  return <MediumText style={{ fontSize: RFValue(13) }}>{title}</MediumText>;
+  return <MediumText style={{ fontSize: RFValue(11) }}>{title}</MediumText>;
 };

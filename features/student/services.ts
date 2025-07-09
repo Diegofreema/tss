@@ -55,23 +55,26 @@ export const fetchTerm = async ({ token }: { token: string }) => {
 };
 
 export const fetchTestSummary = async ({
-  classname,
   regnum,
   token,
 }: FetchTestSummaryType) => {
-  const { data } = await axios.post<FetchTestSummaryResponseType>(
-    `${baseUrl}parents/test-summary`,
-    {
-      classname,
-      regnum,
-    },
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
-  return data;
+  console.log({ regnum, token });
+  try {
+    const { data } = await axios.get<FetchTestSummaryResponseType>(
+      `https://app.tss.sch.ng/api/parents/test-summary`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        params: {
+          regnum,
+        },
+      }
+    );
+    return data;
+  } catch (error) {
+    throw new Error(`${error}`);
+  }
 };
 export const fetchCA = async ({
   classname,

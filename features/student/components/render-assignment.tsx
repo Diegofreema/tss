@@ -1,23 +1,27 @@
-import { ThemedView } from '@/features/shared/components/ThemedView';
-import { Title } from '@/features/shared/components/title';
-import { Button } from '@/features/shared/components/ui/button';
-import { Stack } from '@/features/shared/components/ui/stack';
-import { router } from 'expo-router';
+import { LegendList, LegendListRenderItemProps } from '@legendapp/list';
+import { View } from 'react-native';
+import { SummaryType } from '../types';
+import { RenderSummary } from './render-summary';
 
 type Props = {
-  horizontal?: boolean;
+  data: SummaryType[];
 };
 
-export const RenderAssignments = ({ horizontal }: Props) => {
+export const RenderAssignments = ({ data }: Props) => {
+  const renderItem = ({ item }: LegendListRenderItemProps<SummaryType>) => (
+    <RenderSummary item={item} />
+  );
   return (
-    <Stack backgroundColor="transparent" gap={10}>
-      <Title title="Assignments" />
-      <ThemedView style={{ minHeight: 200 }}>
-        <Button
-          title="Assignment details"
-          onPress={() => router.push('/assignment-detail')}
-        />
-      </ThemedView>
-    </Stack>
+    <View style={{ flex: 1 }}>
+      <LegendList
+        data={data}
+        keyExtractor={(item, i) => item.testid + i}
+        contentContainerStyle={{ gap: 20 }}
+        renderItem={renderItem}
+        recycleItems
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
+      />
+    </View>
   );
 };
