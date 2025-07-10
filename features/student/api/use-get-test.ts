@@ -1,5 +1,5 @@
 import { useAuth } from '@/features/shared/store/use-auth';
-import { keepPreviousData, useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { fetchTestSummary } from '../services';
 import { FetchTestSummaryType } from '../types';
 
@@ -12,6 +12,5 @@ export const useGetTest = ({ regnum }: FetchTestSummaryType) => {
       return await fetchTestSummary({ token, regnum });
     },
     retry: 3,
-    placeholderData: keepPreviousData,
   });
 };

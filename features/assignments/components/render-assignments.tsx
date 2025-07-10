@@ -1,5 +1,6 @@
 import { LoadingModal } from '@/features/shared/components/modal/loading-modal';
 import { Header } from '@/features/shared/components/ui/header';
+import { useStudent } from '@/features/student/store/useStudent';
 import { useState } from 'react';
 import { ScrollView } from 'react-native';
 import { useSubmitAssignment } from '../api/use-submit-assignment';
@@ -12,13 +13,20 @@ type Props = {
 };
 
 export const RenderAssignments = ({ data }: Props) => {
-  const { data: responseData, mutateAsync, isPending } = useSubmitAssignment();
-  const [showResult, setShowResult] = useState(true);
+  const {
+    data: responseData,
+    mutateAsync,
+    isPending,
+    error,
+  } = useSubmitAssignment();
+  const [showResult, setShowResult] = useState(false);
+  const student = useStudent((state) => state.student);
+
   const handleSubmit = async (answers: Answer[]) => {
     await mutateAsync(
       {
         answers,
-        regnum: data.regnum,
+        regnum: student?.regnum as string,
         testid: data.testid,
       },
       {
@@ -28,6 +36,7 @@ export const RenderAssignments = ({ data }: Props) => {
       }
     );
   };
+  console.log(error?.message);
 
   return (
     <ScrollView
@@ -35,14 +44,14 @@ export const RenderAssignments = ({ data }: Props) => {
       contentContainerStyle={{ gap: 20 }}
     >
       <LoadingModal visible={isPending} />
-      <Header title={data.subjectName} />
+      <Header title={data?.subjectName} />
       {showResult ? (
         <RenderResult data={responseData?.data!} />
       ) : (
         <AssignmentComponent
           onSubmit={handleSubmit}
-          questions={data.questions}
-          totalQuestions={data.totalQuestions}
+          questions={data?.questions}
+          totalQuestions={data?.totalQuestions}
         />
       )}
     </ScrollView>

@@ -12,14 +12,14 @@ export const useSubmitAssignment = () => {
       return await submitAssignments({ answers, regnum, testid, token });
     },
     onSuccess: (data) => {
-      toast(`${data.data.subject} assignment submitted`, 'success');
+      toast(`Assignment submitted`, 'success');
       queryClient.invalidateQueries({ queryKey: ['assignments'] });
       queryClient.invalidateQueries({ queryKey: ['tests'] });
     },
     onError: (error) => {
       console.log(error.message);
 
-      toast(`An error occurred, Please try again later`, 'error');
+      toast(`Failed to submit assignment, Please try again later`, 'error');
     },
   });
 };

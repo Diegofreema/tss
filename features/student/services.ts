@@ -58,16 +58,15 @@ export const fetchTestSummary = async ({
   regnum,
   token,
 }: FetchTestSummaryType) => {
-  console.log({ regnum, token });
   try {
-    const { data } = await axios.get<FetchTestSummaryResponseType>(
+    const { data } = await axios.post<FetchTestSummaryResponseType>(
       `https://app.tss.sch.ng/api/parents/test-summary`,
+      {
+        regnum,
+      },
       {
         headers: {
           Authorization: `Bearer ${token}`,
-        },
-        params: {
-          regnum,
         },
       }
     );

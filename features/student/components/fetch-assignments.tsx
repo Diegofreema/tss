@@ -17,13 +17,20 @@ type Props = {
 };
 export const FetchAssignments = ({ carousel }: Props) => {
   const student = useStudent((state) => state.student);
-  const { data, isPending, isError, error } = useGetTest({
+  const {
+    data,
+    isPending,
+    isError,
+
+    refetch,
+    isRefetching,
+    isRefetchError,
+  } = useGetTest({
     regnum: student?.regnum!,
   });
   const { width } = useWindowDimensions();
-  console.log(error?.message);
 
-  if (isError) {
+  if (isError || isRefetchError) {
     console.log('Failed to fetch assignments data');
   }
   if (isPending) {
@@ -35,7 +42,7 @@ export const FetchAssignments = ({ carousel }: Props) => {
     );
   }
 
-  console.log({ data });
+  const dataToRender = data?.data || [];
 
   return (
     <Stack flex={1}>
@@ -55,68 +62,12 @@ export const FetchAssignments = ({ carousel }: Props) => {
         </Stack>
       )}
       {carousel ? (
-        <AssignmentsCarousel
-          data={[
-            {
-              testid: 'MVNKWNSELEPI',
-              assesment: 'First CA',
-              date1: '2025-07-07T16:45:00.000Z',
-              date2: '2025-07-09T16:40:00.000Z',
-              subjectName: 'TECH',
-              regnum: 'LTS-2025-3202K',
-              studentName: 'david freeman',
-            },
-            {
-              testid: 'MVNKWNSELEPIe',
-              assesment: 'First CA',
-              date1: '2025-07-07T16:45:00.000Z',
-              date2: '2025-07-09T16:40:00.000Z',
-              subjectName: 'TECH',
-              regnum: 'LTS-2025-3202K',
-              studentName: 'david freeman',
-            },
-            {
-              testid: 'MVNKWNSELEPIee',
-              assesment: 'First CA',
-              date1: '2025-07-07T16:45:00.000Z',
-              date2: '2025-07-09T16:40:00.000Z',
-              subjectName: 'TECH',
-              regnum: 'LTS-2025-3202K',
-              studentName: 'david freeman',
-            },
-          ]}
-        />
+        <AssignmentsCarousel data={dataToRender.splice(0, 5)} />
       ) : (
         <RenderAssignments
-          data={[
-            {
-              testid: 'MVNKWNSELEPI',
-              assesment: 'First CA',
-              date1: '2025-07-07T16:45:00.000Z',
-              date2: '2025-07-09T16:40:00.000Z',
-              subjectName: 'TECH',
-              regnum: 'LTS-2025-3202K',
-              studentName: 'david freeman',
-            },
-            {
-              testid: 'MVNKWNSELEPI',
-              assesment: 'First CA',
-              date1: '2025-07-07T16:45:00.000Z',
-              date2: '2025-07-09T16:40:00.000Z',
-              subjectName: 'TECH',
-              regnum: 'LTS-2025-3202K',
-              studentName: 'david freeman',
-            },
-            {
-              testid: 'MVNKWNSELEPI',
-              assesment: 'First CA',
-              date1: '2025-07-07T16:45:00.000Z',
-              date2: '2025-07-09T16:40:00.000Z',
-              subjectName: 'TECH',
-              regnum: 'LTS-2025-3202K',
-              studentName: 'david freeman',
-            },
-          ]}
+          data={dataToRender}
+          onRefresh={refetch}
+          refreshing={isRefetching}
         />
       )}
     </Stack>

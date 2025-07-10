@@ -27,7 +27,7 @@ type Props = {
 export const RenderSummary = ({ item }: Props) => {
   const monthDay = format(item.date1, 'MMM');
   const day = format(item.date1, 'd');
-  console.log({ monthDay, day, item });
+
   const colorScheme = useColorScheme();
   const iconColor = Colors[colorScheme ?? 'light'].icon;
   const onPress = () => {

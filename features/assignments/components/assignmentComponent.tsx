@@ -25,7 +25,7 @@ type Props = {
 };
 
 export const AssignmentComponent = ({
-  questions,
+  questions = [],
   onSubmit,
   totalQuestions,
 }: Props) => {
@@ -41,7 +41,7 @@ export const AssignmentComponent = ({
   const handleOptionSelect = (option: string) => {
     setSelectedAnswers((prev) => ({
       ...prev,
-      [currentQuestion.numberz]: option,
+      [currentQuestion?.numberz]: option,
     }));
   };
 
@@ -53,7 +53,7 @@ export const AssignmentComponent = ({
       const formattedAnswers = Object.entries(selectedAnswers).map(
         ([numberz, yourAnswer]) => ({
           numberz: parseInt(numberz),
-          yourAnswer: yourAnswer.split('n')[0] + ' ' + yourAnswer.split('n')[1],
+          yourAnswer: `${yourAnswer.split('n')[0]}n ${yourAnswer.split('n')[1]}`,
         })
       );
       onSubmit(formattedAnswers);

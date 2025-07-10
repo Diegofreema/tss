@@ -16,7 +16,7 @@ export const FetchAssignments = () => {
   console.log({ error });
   const { width } = useWindowDimensions();
   if (isError) {
-    console.log('Error fetching assignments:', error);
+    throw new Error('Failed to get assignment detail');
   }
   if (isPending) {
     return (
@@ -26,6 +26,7 @@ export const FetchAssignments = () => {
       />
     );
   }
-  console.log(data);
+
+  // return null;
   return <RenderAssignments data={data?.data!} />;
 };

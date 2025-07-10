@@ -55,7 +55,6 @@ export const RenderAttendance = ({
   term,
   currentDate = new Date().toISOString().split('T')[0],
 }: Props) => {
-  console.log({ term });
   const dataToUse: AttendanceType[] = data.length > 0 ? data : [];
   const colorScheme = useColorScheme();
   const bg = Colors[colorScheme ?? 'light'].card;

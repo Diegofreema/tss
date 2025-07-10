@@ -1,3 +1,9 @@
+import {
+  Card,
+  CardContent,
+  CardHeader,
+} from '@/features/shared/components/custom-card';
+import { MediumText } from '@/features/shared/components/typography';
 import { colors } from '@/features/shared/constants';
 import { useRef } from 'react';
 import { Dimensions, View } from 'react-native';
@@ -28,6 +34,26 @@ export const AssignmentsCarousel = ({ data }: Props) => {
     });
   };
 
+  if (!data.length) {
+    return (
+      <Card style={{ height: width / 2 }}>
+        <CardContent>
+          <CardHeader
+            style={{
+              alignItems: 'center',
+              justifyContent: 'center',
+              height: '100%',
+            }}
+          >
+            <MediumText style={{ textAlign: 'center' }}>
+              No assignments
+            </MediumText>
+          </CardHeader>
+        </CardContent>
+      </Card>
+    );
+  }
+
   return (
     <View style={{ flex: 1 }}>
       <Carousel
@@ -39,7 +65,7 @@ export const AssignmentsCarousel = ({ data }: Props) => {
         onProgressChange={progress}
         autoPlay
         autoPlayReverse
-        autoPlayInterval={2000}
+        autoPlayInterval={2500}
       />
       <Pagination.Basic
         progress={progress}

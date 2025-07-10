@@ -32,13 +32,15 @@ export const submitAssignments = async ({
   testid,
   answers,
 }: SubmitAssignmentsType) => {
-  const _answers = JSON.stringify(answers);
+  // const _answers = JSON.stringify(answers);
+  console.log({ answers, testid, regnum, token });
+
   const { data } = await axios.post<SubmitAssignmentResponseType>(
-    `${baseUrl}parents/submit-test`,
+    `${baseUrl}parents/test/submit`,
     {
       regnum,
       testid,
-      answers: _answers,
+      answers,
     },
     {
       headers: {
