@@ -1,4 +1,3 @@
-import { Colors } from '@/constants/Colors';
 import { CustomSelect } from '@/features/shared/components/custom-select';
 import {
   MediumText,
@@ -7,7 +6,6 @@ import {
 import { CustomPressable } from '@/features/shared/components/ui/custom-pressable';
 import { Stack } from '@/features/shared/components/ui/stack';
 import { colors } from '@/features/shared/constants';
-import { useColorScheme } from '@/hooks/useColorScheme.web';
 import { FontAwesome } from '@expo/vector-icons';
 import {
   BottomSheetModal,
@@ -47,9 +45,8 @@ export const BottomSheetComponent = forwardRef<BottomSheetModal, Props>(
     },
     ref
   ) => {
-    const colorScheme = useColorScheme();
-    const bg = Colors[colorScheme ?? 'light'].card;
-    const iconColor = Colors[colorScheme ?? 'light'].icon;
+    const bg = colors.purple;
+
     const onClose = () => {
       if (ref && 'current' in ref && ref.current) {
         ref.current.close();
@@ -65,7 +62,12 @@ export const BottomSheetComponent = forwardRef<BottomSheetModal, Props>(
           handleComponent={null}
         >
           <BottomSheetView
-            style={[styles.contentContainer, { backgroundColor: bg }]}
+            style={[
+              styles.contentContainer,
+              {
+                backgroundColor: bg,
+              },
+            ]}
           >
             <Stack
               alignItems="center"
@@ -74,30 +76,39 @@ export const BottomSheetComponent = forwardRef<BottomSheetModal, Props>(
               direction="row"
               justifyContent="space-between"
             >
-              <MediumText>Filter</MediumText>
+              <MediumText style={{ color: 'white' }}>Filter</MediumText>
               <CustomPressable onPress={onClose} style={styles.press}>
-                <FontAwesome name="times" color={iconColor} size={23} />
+                <FontAwesome name="times" color={'white'} size={23} />
               </CustomPressable>
             </Stack>
             <Stack gap={5}>
-              <NormalText>Academic session</NormalText>
+              <NormalText style={{ color: 'white' }}>
+                Academic session
+              </NormalText>
               <CustomSelect
                 data={sessions}
                 onSelect={setSession}
                 value={session}
+                color="white"
               />
             </Stack>
             <Stack gap={5}>
-              <NormalText>Class</NormalText>
+              <NormalText style={{ color: 'white' }}>Class</NormalText>
               <CustomSelect
                 data={classes}
                 onSelect={setClass}
                 value={singleClass}
+                color="white"
               />
             </Stack>
             <Stack gap={5}>
-              <NormalText>Term</NormalText>
-              <CustomSelect data={terms} onSelect={setTerm} value={term} />
+              <NormalText style={{ color: 'white' }}>Term</NormalText>
+              <CustomSelect
+                data={terms}
+                onSelect={setTerm}
+                value={term}
+                color="white"
+              />
             </Stack>
             <Stack mt={20} direction="row" gap={10} alignItems="center">
               <CustomPressable
@@ -105,9 +116,9 @@ export const BottomSheetComponent = forwardRef<BottomSheetModal, Props>(
                   reset();
                   onClose();
                 }}
-                style={[styles.button, { backgroundColor: colors.purple }]}
+                style={[styles.button, { backgroundColor: colors.white }]}
               >
-                <NormalText style={{ color: colors.white }}>Reset</NormalText>
+                <NormalText style={{ color: colors.purple }}>Reset</NormalText>
               </CustomPressable>
             </Stack>
           </BottomSheetView>
@@ -124,6 +135,7 @@ const styles = StyleSheet.create({
     flex: 1,
     gap: 10,
     paddingHorizontal: 20,
+    boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
   },
   button: {
     flex: 1,

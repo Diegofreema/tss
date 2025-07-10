@@ -11,19 +11,22 @@ export const updateProfile = async ({
   states,
   address2,
 }: UpdateProfileType & { token: string }) => {
-  const { data } = await axios.put<UpdateProfileTypeResponse>(
-    `${baseUrl}/parent/me`,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+  console.log({ token });
 
+  const { data } = await axios.put<UpdateProfileTypeResponse>(
+    `${baseUrl}/parents/me`,
+    {
       phone,
       profesion,
       address,
       city,
       states,
       address2,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     }
   );
   return data;

@@ -191,8 +191,8 @@ export const More = () => {
           renderItem={renderListItem}
           keyExtractor={(item) => `${keyPrefix}-${item.id}`}
           scrollEnabled={false}
-          ItemSeparatorComponent={() => <View style={styles.separator} />}
-          contentContainerStyle={styles.flatListContent}
+          // ItemSeparatorComponent={() => <View style={styles.separator} />}
+          contentContainerStyle={[styles.flatListContent, { gap: 25 }]}
         />
       </ThemedView>
     </ThemedView>

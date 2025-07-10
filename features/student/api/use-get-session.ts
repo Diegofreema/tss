@@ -1,5 +1,5 @@
 import { useAuth } from '@/features/shared/store/use-auth';
-import { keepPreviousData, useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { fetchSession } from '../services';
 
 export const useGetSession = () => {
@@ -11,6 +11,5 @@ export const useGetSession = () => {
       return await fetchSession({ token });
     },
     retry: 3,
-    placeholderData: keepPreviousData,
   });
 };

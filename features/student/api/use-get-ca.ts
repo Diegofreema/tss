@@ -1,5 +1,5 @@
 import { useAuth } from '@/features/shared/store/use-auth';
-import { keepPreviousData, useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { fetchCA } from '../services';
 import { FetchCAType } from '../types';
 
@@ -12,6 +12,5 @@ export const useGetCA = ({ regnum, term, classname, session }: FetchCAType) => {
       return await fetchCA({ token, regnum, term, classname, session });
     },
     retry: 3,
-    placeholderData: keepPreviousData,
   });
 };

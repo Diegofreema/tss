@@ -16,8 +16,8 @@ export const useUpdateProfile = () => {
     },
     onSuccess: (data) => {
       if (!user) return;
-      const { address, city, phone, profesion, states } = data.data;
-      getUser({ ...user, city, address, phone, profesion, states });
+      const { address, city, phone, profesion, states, address2 } = data.data;
+      getUser({ ...user, city, address, phone, profesion, states, address2 });
 
       toast(`Profile updated`, 'success');
       router.replace('/profile');

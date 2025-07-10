@@ -11,6 +11,7 @@ import { updateSchema } from '../../validator';
 
 export const ProfileForm = () => {
   const user = useAuth((state) => state.user);
+
   const { mutateAsync } = useUpdateProfile();
   const {
     formState: { errors, isSubmitting },

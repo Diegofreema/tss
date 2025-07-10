@@ -4,6 +4,7 @@ import { LoadingCard } from '@/features/shared/components/loading-card';
 import { LoadingLists } from '@/features/shared/components/loading-lists';
 import { CustomPressable } from '@/features/shared/components/ui/custom-pressable';
 import { Stack } from '@/features/shared/components/ui/stack';
+import { Wrapper } from '@/features/shared/components/ui/wrapper';
 import { useColorScheme } from '@/hooks/useColorScheme.web';
 import { Ionicons } from '@expo/vector-icons';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
@@ -100,43 +101,45 @@ export const FetchCa = () => {
 
   return (
     <View style={{ flex: 1, gap: 10 }}>
-      <Stack
-        direction="row"
-        justifyContent="space-between"
-        gap={10}
-        alignItems="center"
-      >
+      <Wrapper>
         <Stack
           direction="row"
+          justifyContent="space-between"
           gap={10}
           alignItems="center"
-          flex={1}
-          style={[styles.inputContainer, { borderColor }]}
         >
-          <Ionicons
-            name="search"
-            size={25}
-            color={iconColor}
-            style={{ marginRight: 10 }}
-          />
-          <TextInput
-            placeholder={'Search by subject name...'}
-            style={[styles.input, { color: textColor }]}
-            placeholderTextColor={textColor}
-            value={value}
-            onChangeText={setValue}
-            autoCapitalize="none"
-          />
+          <Stack
+            direction="row"
+            gap={10}
+            alignItems="center"
+            flex={1}
+            style={[styles.inputContainer, { borderColor }]}
+          >
+            <Ionicons
+              name="search"
+              size={25}
+              color={iconColor}
+              style={{ marginRight: 10 }}
+            />
+            <TextInput
+              placeholder={'Search by subject name...'}
+              style={[styles.input, { color: textColor }]}
+              placeholderTextColor={textColor}
+              value={value}
+              onChangeText={setValue}
+              autoCapitalize="none"
+            />
+          </Stack>
+          <CustomPressable onPress={handlePresentModalPress}>
+            <Ionicons name="filter" size={24} color={iconColor} />
+          </CustomPressable>
         </Stack>
-        <CustomPressable onPress={handlePresentModalPress}>
-          <Ionicons name="filter" size={24} color={iconColor} />
-        </CustomPressable>
-      </Stack>
-      <RenderCAs
-        data={dataToRender}
-        refetch={onRefresh}
-        isRefetching={isRefetching}
-      />
+        <RenderCAs
+          data={dataToRender}
+          refetch={onRefresh}
+          isRefetching={isRefetching}
+        />
+      </Wrapper>
       <BottomSheetComponent
         ref={bottomSheetModalRef}
         session={session}

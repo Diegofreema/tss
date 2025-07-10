@@ -21,7 +21,7 @@ export const FetchAttendance = () => {
     term: terms?.data[0]!,
   });
   const [term, setTerm] = React.useState<TermSingleType>(
-    (terms?.data[0] as TermSingleType) ?? 'First Term'
+    (terms?.data[0] as TermSingleType) || 'First Term'
   );
   const { width } = useWindowDimensions();
   const cardWidth = width - 30; // Assuming a margin of 20 on each side

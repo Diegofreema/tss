@@ -4,9 +4,9 @@ import { Platform } from 'react-native';
 
 import { Colors } from '@/constants/Colors';
 import { HapticTab } from '@/features/shared/components/HapticTab';
-import { IconSymbol } from '@/features/shared/components/ui/IconSymbol';
 import TabBarBackground from '@/features/shared/components/ui/TabBarBackground';
 import { useColorScheme } from '@/hooks/useColorScheme';
+import { Feather } from '@expo/vector-icons';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -32,7 +32,7 @@ export default function TabLayout() {
         options={{
           title: 'Home',
           tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="house.fill" color={color} />
+            <Feather name="home" size={28} color={color} />
           ),
         }}
       />
@@ -41,11 +41,7 @@ export default function TabLayout() {
         options={{
           title: 'Performance',
           tabBarIcon: ({ color }) => (
-            <IconSymbol
-              size={28}
-              name="bolt.badge.automatic.fill"
-              color={color}
-            />
+            <Feather size={28} name="trending-up" color={color} />
           ),
         }}
       />
@@ -54,7 +50,7 @@ export default function TabLayout() {
         options={{
           title: 'Assignments',
           tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="list.bullet.clipboard" color={color} />
+            <Feather size={28} name="list" color={color} />
           ),
         }}
       />
@@ -64,7 +60,7 @@ export default function TabLayout() {
         options={{
           title: 'More',
           tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="ellipsis.circle.fill" color={color} />
+            <Feather size={28} name="more-horizontal" color={color} />
           ),
         }}
       />

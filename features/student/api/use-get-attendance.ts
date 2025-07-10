@@ -1,5 +1,5 @@
 import { useAuth } from '@/features/shared/store/use-auth';
-import { keepPreviousData, useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { fetchAttendance } from '../services';
 import { FetchAttendanceType } from '../types';
 
@@ -12,6 +12,5 @@ export const useGetAttendance = ({ regnum, term }: FetchAttendanceType) => {
       return await fetchAttendance({ token, regnum, term });
     },
     retry: 3,
-    placeholderData: keepPreviousData,
   });
 };
