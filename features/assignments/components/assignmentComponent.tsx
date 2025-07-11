@@ -13,6 +13,7 @@ import { StyleSheet, View } from 'react-native';
 import Animated, { SlideInLeft } from 'react-native-reanimated';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { QuestionType } from '../types';
+import { PreviewAssignment } from './preview-assignment';
 
 type Answer = {
   numberz: number;
@@ -31,6 +32,8 @@ export const AssignmentComponent = ({
 }: Props) => {
   const colorScheme = useColorScheme();
   const questionColor = Colors[colorScheme ?? 'light'].question;
+  const [preview, setPreview] = useState(false);
+  const [answers, setAnswers] = useState<Answer[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<
     Record<number, string>
@@ -56,7 +59,8 @@ export const AssignmentComponent = ({
           yourAnswer: `${yourAnswer.split('n')[0]}n ${yourAnswer.split('n')[1]}`,
         })
       );
-      onSubmit(formattedAnswers);
+      setPreview(true);
+      setAnswers(formattedAnswers);
     }
   };
 
@@ -91,40 +95,60 @@ export const AssignmentComponent = ({
       </Stack>
     );
   };
-
+  const retake = () => {
+    setPreview(false);
+    setCurrentIndex(0);
+    setSelectedAnswers({});
+  };
+  const handleSubmit = () => {
+    onSubmit(answers);
+  };
   return (
     <View>
-      <Animated.View
-        key={currentQuestion.numberz}
-        entering={SlideInLeft.springify().mass(0.5).stiffness(100)}
-      >
-        <MediumText>{currentQuestion.question}</MediumText>
-        <NormalText style={[styles.questionNumber, { color: questionColor }]}>
-          Question {currentIndex + 1} of {totalQuestions}
-        </NormalText>
-        <Stack gap={15} mt={10}>
-          {['OptionA', 'OptionB', 'OptionC'].map((option) =>
-            renderOption(
-              option,
-              currentQuestion[option as keyof QuestionType] as string
-            )
-          )}
-        </Stack>
-      </Animated.View>
-      <Stack mt={20}>
-        <Stack direction="row" justifyContent="space-between" gap={10}>
-          <NormalButton
-            buttonText="Previous"
-            onPress={handlePrevious}
-            disabled={isFirstQuestion}
-          />
+      {preview ? (
+        <PreviewAssignment
+          answers={answers}
+          retake={retake}
+          submit={handleSubmit}
+          questions={questions}
+        />
+      ) : (
+        <>
+          <Animated.View
+            key={currentQuestion.numberz}
+            entering={SlideInLeft.springify().mass(0.5).stiffness(100)}
+          >
+            <MediumText>{currentQuestion.question}</MediumText>
+            <NormalText
+              style={[styles.questionNumber, { color: questionColor }]}
+            >
+              Question {currentIndex + 1} of {totalQuestions}
+            </NormalText>
+            <Stack gap={15} mt={10}>
+              {['OptionA', 'OptionB', 'OptionC'].map((option) =>
+                renderOption(
+                  option,
+                  currentQuestion[option as keyof QuestionType] as string
+                )
+              )}
+            </Stack>
+          </Animated.View>
+          <Stack mt={20}>
+            <Stack direction="row" justifyContent="space-between" gap={10}>
+              <NormalButton
+                buttonText="Previous"
+                onPress={handlePrevious}
+                disabled={isFirstQuestion}
+              />
 
-          <NormalButton
-            buttonText={isLastQuestion ? 'Submit' : 'Next'}
-            onPress={handleNext}
-          />
-        </Stack>
-      </Stack>
+              <NormalButton
+                buttonText={isLastQuestion ? 'Preview' : 'Next'}
+                onPress={handleNext}
+              />
+            </Stack>
+          </Stack>
+        </>
+      )}
     </View>
   );
 };

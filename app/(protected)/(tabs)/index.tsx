@@ -2,7 +2,7 @@ import { FetchEvents } from '@/features/events/components/fetch-events';
 import { MediumText } from '@/features/shared/components/typography';
 import { Button } from '@/features/shared/components/ui/button';
 import { Wrapper } from '@/features/shared/components/ui/wrapper';
-import { FetchAssignments } from '@/features/student/components/fetch-assignments';
+import { AssignmentsCarousel } from '@/features/student/components/assignment-carousel';
 import { FetchAttendance } from '@/features/student/components/fetch-attendance';
 import { FetchStudent } from '@/features/student/components/fetch-student';
 import { ErrorBoundaryProps } from 'expo-router';
@@ -25,7 +25,7 @@ export default function HomeScreen() {
         contentContainerStyle={{ gap: 20, paddingBottom: 50 }}
       >
         <FetchStudent />
-        <FetchAssignments carousel />
+        <AssignmentsCarousel />
         <FetchAttendance />
         <FetchEvents horizontal />
       </ScrollView>

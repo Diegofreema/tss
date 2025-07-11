@@ -47,6 +47,7 @@ export type FetchSessionResponseType = {
 export type FetchTestSummaryType = {
   token?: string;
   regnum: string;
+  status: 'completed' | 'pending' | 'elapsed';
 };
 export type SummaryType = {
   testid: string;

@@ -2,6 +2,7 @@ import { Colors } from '@/constants/Colors';
 import { LoadingBar } from '@/features/shared/components/loading-bar';
 import { LoadingCard } from '@/features/shared/components/loading-card';
 import { LoadingLists } from '@/features/shared/components/loading-lists';
+import { Spacer } from '@/features/shared/components/spacer';
 import { CustomPressable } from '@/features/shared/components/ui/custom-pressable';
 import { Stack } from '@/features/shared/components/ui/stack';
 import { Wrapper } from '@/features/shared/components/ui/wrapper';
@@ -35,7 +36,7 @@ export const FetchCa = () => {
     data: terms,
     isPending: isPendingTerms,
     isError: isErrorTerms,
-  } = useGetTerms();
+  } = useGetTerms({ regnum: student?.regnum as string });
   const {
     data: sessionData,
     isError: isErrorSession,
@@ -63,7 +64,7 @@ export const FetchCa = () => {
     }
   }, [classData?.data, sessionData?.data]);
   const { data, isPending, isError, refetch, isRefetching } = useGetCA({
-    classname: student?.classname!,
+    classname: singleClass!,
     session,
     term,
     regnum: student?.regnum!,
@@ -83,21 +84,23 @@ export const FetchCa = () => {
 
   if (isPending || isPendingSession || isPendingTerms || isClassPending) {
     return (
-      <Stack gap={10}>
+      <>
         <LoadingBar />
+        <Spacer size={5} />
         <LoadingLists
           horizontal={false}
           renderItem={() => <LoadingCard width={width - 30} height={200} />}
         />
-      </Stack>
+      </>
     );
   }
-  console.log({ classData });
 
   const dataToRender =
     data?.data.filter((item) =>
       item.subjectName.toLowerCase().includes(value.toLowerCase())
     ) || [];
+
+  console.log({ singleClass });
 
   return (
     <View style={{ flex: 1, gap: 10 }}>
@@ -108,13 +111,7 @@ export const FetchCa = () => {
           gap={10}
           alignItems="center"
         >
-          <Stack
-            direction="row"
-            gap={10}
-            alignItems="center"
-            flex={1}
-            style={[styles.inputContainer, { borderColor }]}
-          >
+          <View style={[styles.inputContainer, { borderColor }]}>
             <Ionicons
               name="search"
               size={25}
@@ -129,7 +126,7 @@ export const FetchCa = () => {
               onChangeText={setValue}
               autoCapitalize="none"
             />
-          </Stack>
+          </View>
           <CustomPressable onPress={handlePresentModalPress}>
             <Ionicons name="filter" size={24} color={iconColor} />
           </CustomPressable>
@@ -172,6 +169,10 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     borderRadius: 10,
     borderWidth: 1,
+    flexDirection: 'row',
+    gap: 10,
+    flex: 1,
+    alignItems: 'center',
   },
   container: {
     flex: 1,

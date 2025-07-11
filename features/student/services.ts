@@ -42,9 +42,15 @@ export const fetchAttendance = async ({
   );
   return data;
 };
-export const fetchTerm = async ({ token }: { token: string }) => {
+export const fetchTerm = async ({
+  token,
+  regnum,
+}: {
+  token: string;
+  regnum: string;
+}) => {
   const { data } = await axios.get<FetchTermResponseType>(
-    `${baseUrl}parents/filters/terms`,
+    `${baseUrl}parents/filters/terms/${regnum}`,
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -59,11 +65,8 @@ export const fetchTestSummary = async ({
   token,
 }: FetchTestSummaryType) => {
   try {
-    const { data } = await axios.post<FetchTestSummaryResponseType>(
-      `https://app.tss.sch.ng/api/parents/test-summary`,
-      {
-        regnum,
-      },
+    const { data } = await axios.get<FetchTestSummaryResponseType>(
+      `https://app.tss.sch.ng/api/parents/test-summary/${regnum}?status=completed`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

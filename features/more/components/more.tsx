@@ -401,7 +401,6 @@ const styles = StyleSheet.create({
     marginLeft: 40,
   },
   footer: {
-    paddingVertical: 32,
     alignItems: 'center',
   },
   footerText: {

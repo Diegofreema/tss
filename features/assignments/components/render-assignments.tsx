@@ -13,12 +13,7 @@ type Props = {
 };
 
 export const RenderAssignments = ({ data }: Props) => {
-  const {
-    data: responseData,
-    mutateAsync,
-    isPending,
-    error,
-  } = useSubmitAssignment();
+  const { data: responseData, mutateAsync, isPending } = useSubmitAssignment();
   const [showResult, setShowResult] = useState(false);
   const student = useStudent((state) => state.student);
 
@@ -36,7 +31,6 @@ export const RenderAssignments = ({ data }: Props) => {
       }
     );
   };
-  console.log(error?.message);
 
   return (
     <ScrollView

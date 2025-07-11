@@ -26,6 +26,8 @@ export type StackProps = {
   flex?: number; // Flex
   style?: StyleProp<ViewStyle>; // Custom style override
   width?: DimensionValue;
+  borderColor?: string;
+  borderWidth?: number;
 };
 
 export type User = {

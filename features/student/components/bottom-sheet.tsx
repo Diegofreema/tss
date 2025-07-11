@@ -8,11 +8,13 @@ import { Stack } from '@/features/shared/components/ui/stack';
 import { colors } from '@/features/shared/constants';
 import { FontAwesome } from '@expo/vector-icons';
 import {
+  BottomSheetBackdrop,
+  BottomSheetBackdropProps,
   BottomSheetModal,
   BottomSheetModalProvider,
   BottomSheetView,
 } from '@gorhom/bottom-sheet';
-import { forwardRef } from 'react';
+import { forwardRef, useCallback } from 'react';
 import { StyleSheet } from 'react-native';
 
 type Props = {
@@ -52,14 +54,21 @@ export const BottomSheetComponent = forwardRef<BottomSheetModal, Props>(
         ref.current.close();
       }
     };
+    const renderBackdrop = useCallback(
+      (props: BottomSheetBackdropProps) => (
+        <BottomSheetBackdrop {...props} pressBehavior={'close'} />
+      ),
+      []
+    );
     return (
       <BottomSheetModalProvider>
         <BottomSheetModal
           ref={ref}
-          snapPoints={['60%', '65%']}
-          enableHandlePanningGesture
+          snapPoints={['60%']}
+          enableDynamicSizing={false}
           backgroundStyle={{ backgroundColor: bg }}
           handleComponent={null}
+          backdropComponent={renderBackdrop}
         >
           <BottomSheetView
             style={[
@@ -89,7 +98,6 @@ export const BottomSheetComponent = forwardRef<BottomSheetModal, Props>(
                 data={sessions}
                 onSelect={setSession}
                 value={session}
-                color="white"
               />
             </Stack>
             <Stack gap={5}>
@@ -98,17 +106,11 @@ export const BottomSheetComponent = forwardRef<BottomSheetModal, Props>(
                 data={classes}
                 onSelect={setClass}
                 value={singleClass}
-                color="white"
               />
             </Stack>
             <Stack gap={5}>
               <NormalText style={{ color: 'white' }}>Term</NormalText>
-              <CustomSelect
-                data={terms}
-                onSelect={setTerm}
-                value={term}
-                color="white"
-              />
+              <CustomSelect data={terms} onSelect={setTerm} value={term} />
             </Stack>
             <Stack mt={20} direction="row" gap={10} alignItems="center">
               <CustomPressable

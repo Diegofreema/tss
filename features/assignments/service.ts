@@ -12,12 +12,8 @@ export const fetchAssignments = async ({
   regnum,
   testid,
 }: FetchAssignmentResponseType) => {
-  const { data } = await axios.post<FetchAssignmentSuccessResponseType>(
-    `${baseUrl}parents/test-assignments`,
-    {
-      regnum,
-      testid,
-    },
+  const { data } = await axios.get<FetchAssignmentSuccessResponseType>(
+    `${baseUrl}parents/test-assignments/${testid}/${regnum}`,
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -32,21 +28,25 @@ export const submitAssignments = async ({
   testid,
   answers,
 }: SubmitAssignmentsType) => {
-  // const _answers = JSON.stringify(answers);
+  const _answers = JSON.stringify(answers);
   console.log({ answers, testid, regnum, token });
 
-  const { data } = await axios.post<SubmitAssignmentResponseType>(
-    `${baseUrl}parents/test/submit`,
-    {
-      regnum,
-      testid,
-      answers,
-    },
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
+  try {
+    const { data } = await axios.post<SubmitAssignmentResponseType>(
+      `${baseUrl}parents/test/submit`,
+      {
+        regnum,
+        testid,
+        answers: _answers,
       },
-    }
-  );
-  return data;
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return data;
+  } catch (error) {
+    throw new Error(`${error}`);
+  }
 };

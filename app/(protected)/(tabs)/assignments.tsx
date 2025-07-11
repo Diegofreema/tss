@@ -1,11 +1,11 @@
 import { Wrapper } from '@/features/shared/components/ui/wrapper';
-import { FetchAssignments } from '@/features/student/components/fetch-assignments';
+import { AssignmentTabs } from '@/features/student/components/assignment-tab';
 import React from 'react';
 
 const AssignmentScreen = () => {
   return (
-    <Wrapper>
-      <FetchAssignments />
+    <Wrapper style={{ flex: 1, paddingHorizontal: 0 }}>
+      <AssignmentTabs />
     </Wrapper>
   );
 };

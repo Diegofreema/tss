@@ -40,7 +40,7 @@ export const FetchEvents = ({
   }
 
   return (
-    <Stack flex={1} gap={20} backgroundColor="transparent">
+    <Stack flex={1} gap={20} pb={50} backgroundColor="transparent">
       <Title title="Upcoming Events" />
       <RenderEvents
         data={data}
