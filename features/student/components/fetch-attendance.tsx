@@ -15,7 +15,6 @@ export const FetchAttendance = () => {
     isPending: isPendingTerms,
     isError: isErrorTerms,
   } = useGetTerms({ regnum: student?.regnum as string });
-  console.log({ terms });
 
   const { data, isPending, isError } = useGetAttendance({
     regnum: student?.regnum!,
@@ -29,7 +28,6 @@ export const FetchAttendance = () => {
   if (isError || isErrorTerms) {
     throw new Error('Failed to fetch attendance data');
   }
-  console.log({ isPending, isPendingTerms });
 
   if (isPending || isPendingTerms) {
     return (

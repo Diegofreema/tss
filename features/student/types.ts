@@ -94,4 +94,5 @@ export type FetchCAType = {
 
 export type FetchSessionType = {
   token: string;
+  regnum: string;
 };

@@ -63,10 +63,13 @@ export const fetchTerm = async ({
 export const fetchTestSummary = async ({
   regnum,
   token,
+  status,
 }: FetchTestSummaryType) => {
+  console.log({ status });
+
   try {
     const { data } = await axios.get<FetchTestSummaryResponseType>(
-      `https://app.tss.sch.ng/api/parents/test-summary/${regnum}?status=completed`,
+      `https://app.tss.sch.ng/api/parents/test-summary/${regnum}?status=${status}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -87,11 +90,9 @@ export const fetchCA = async ({
 }: FetchCAType) => {
   console.log({ classname, regnum, session, term, token });
 
-  const { data } = await axios.post<FetchCAResponseType>(
-    `${baseUrl}parents/student/ca?session=${encodeURI(session)}&classname=${encodeURI(classname)}&term=${encodeURI(term)}`,
-    {
-      regnum,
-    },
+  const { data } = await axios.get<FetchCAResponseType>(
+    `${baseUrl}parents/student/performance/${encodeURI(regnum)}?session=${encodeURI(session)}&classname=${encodeURI(classname)}&term=${encodeURI(term)}`,
+
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -101,9 +102,9 @@ export const fetchCA = async ({
   return data;
 };
 
-export const fetchSession = async ({ token }: FetchSessionType) => {
+export const fetchSession = async ({ token, regnum }: FetchSessionType) => {
   const { data } = await axios.get<FetchSessionResponseType>(
-    `${baseUrl}parents/filters/sessions`,
+    `${baseUrl}parents/filters/sessions/${regnum}`,
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -112,9 +113,9 @@ export const fetchSession = async ({ token }: FetchSessionType) => {
   );
   return data;
 };
-export const fetchClasses = async ({ token }: FetchSessionType) => {
+export const fetchClasses = async ({ token, regnum }: FetchSessionType) => {
   const { data } = await axios.get<FetchSessionResponseType>(
-    `${baseUrl}parents/filters/classes`,
+    `${baseUrl}parents/filters/classes/${regnum}`,
     {
       headers: {
         Authorization: `Bearer ${token}`,

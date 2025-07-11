@@ -92,7 +92,7 @@ export const AssignmentsCarousel = () => {
         height={width / 2}
         renderItem={({ item }) => <RenderSummary item={item} />}
         onProgressChange={progress}
-        autoPlay
+        autoPlay={data.data.length > 1}
         autoPlayReverse
         autoPlayInterval={2500}
       />
