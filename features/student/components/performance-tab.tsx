@@ -12,7 +12,6 @@ export function PerformanceTab() {
   const [value, setValue] = React.useState<'assessment' | 'result'>(
     'assessment'
   );
-  console.log({ value });
 
   return (
     <View className="flex-1 justify-center">

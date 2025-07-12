@@ -5,7 +5,7 @@ import React from 'react';
 
 export const LoadingResultSheet = () => {
   return (
-    <Stack flex={1} gap={5}>
+    <Stack flex={1} gap={5} pl={15} pr={15}>
       <Stack direction="row" gap={5}>
         <LoadingBar />
 

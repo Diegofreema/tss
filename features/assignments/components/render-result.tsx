@@ -153,10 +153,7 @@ export const RenderResult = ({
                 : finalAnswers[selectedAnswerIndex]?.yourAnswer === 'Option B'
                   ? item['Option B']
                   : item['Option C'];
-            console.log({
-              selectedAnswer,
-              itemAnswer: item[item.answer as keyof typeof item],
-            });
+
             const itemAnswer = item[item.answer as keyof typeof item];
             return (
               <ResultCard

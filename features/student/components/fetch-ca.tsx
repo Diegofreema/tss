@@ -101,8 +101,6 @@ export const FetchCa = () => {
       item.subjectName.toLowerCase().includes(value.toLowerCase())
     ) || [];
 
-  console.log({ singleClass });
-
   return (
     <View style={{ flex: 1, gap: 10 }}>
       <Wrapper>

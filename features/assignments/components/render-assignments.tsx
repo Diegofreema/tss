@@ -17,7 +17,6 @@ export const RenderAssignments = ({ data }: Props) => {
   const [showResult, setShowResult] = useState(false);
   const [finalAnswers, setFinalAnswers] = useState<Answer[]>([]);
   const [questions] = useState<QuestionType[]>(data.questions);
-  console.log({ questionnn: data.questions });
 
   const student = useStudent((state) => state.student);
 
