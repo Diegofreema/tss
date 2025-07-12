@@ -20,7 +20,9 @@ import { RFValue } from 'react-native-responsive-fontsize';
 import { Answer, QuestionType, SubmitAssignmentType } from '../types';
 
 import { FlexText } from '@/features/shared/components/flex-text';
+import { toast } from '@/features/shared/utils';
 import { savePDFToDevice } from '@/features/student/utils';
+import { router } from 'expo-router';
 import { useRef, useState } from 'react';
 import { captureRef } from 'react-native-view-shot';
 type RenderResultProps = {
@@ -96,7 +98,9 @@ export const RenderResult = ({
         height: 792,
       });
 
-      await savePDFToDevice(uri, 'view-export.pdf');
+      await savePDFToDevice(uri, 'assignment.pdf');
+      toast('Downloaded successfully', 'success');
+      router.push('/assignments');
     } catch (error) {
       console.error('Error exporting view to PDF:', error);
       Alert.alert('Error', 'Failed to export view as PDF. Please try again.');
@@ -107,7 +111,7 @@ export const RenderResult = ({
 
   return (
     <>
-      <View ref={contentRef}>
+      <View ref={contentRef} collapsable={false}>
         <Card>
           <CardContent>
             <CardHeader style={{ flexDirection: 'column', gap: 10 }}>
@@ -124,60 +128,58 @@ export const RenderResult = ({
             </CardHeader>
           </CardContent>
         </Card>
-      </View>
 
-      <FlatList
-        ListHeaderComponent={() => (
-          <>
-            <NormalText
-              style={[styles.questionNumber, { color: questionColor }]}
-            >
-              Your score
-            </NormalText>
-            <MediumText style={{ fontSize: RFValue(15) }}>
-              {data.correct} of {data.totalQuestions} answered correctly
-            </MediumText>
-          </>
-        )}
-        data={formattedQuestions}
-        renderItem={({ item }) => {
-          const selectedAnswerIndex = finalAnswers.findIndex(
-            (q) => q.numberz === item.numberz
-          );
-          const selectedAnswer =
-            finalAnswers[selectedAnswerIndex]?.yourAnswer === 'Option A'
-              ? item['Option A']
-              : finalAnswers[selectedAnswerIndex]?.yourAnswer === 'Option B'
-                ? item['Option B']
-                : item['Option C'];
-          console.log({
-            selectedAnswer,
-            itemAnswer: item[item.answer as keyof typeof item],
-          });
-          const itemAnswer = item[item.answer as keyof typeof item];
-          return (
-            <ResultCard
-              item={item}
-              isCorrect={selectedAnswer === itemAnswer}
-              selectedAnswer={selectedAnswer}
-              correctAnswer={itemAnswer as string}
-            />
-          );
-        }}
-        contentContainerStyle={{ gap: 15, paddingBottom: 50 }}
-        showsVerticalScrollIndicator={false}
-        ListFooterComponent={() => (
-          <Stack mt={20} gap={5}>
-            <NormalButton
-              buttonText={'Download'}
-              onPress={exportViewToPDF}
-              disabled={isLoading}
-            />
-          </Stack>
-        )}
-        keyExtractor={(item, i) => item.numberz.toString() + i.toString()}
-        scrollEnabled={false}
-      />
+        <FlatList
+          ListHeaderComponent={() => (
+            <>
+              <NormalText
+                style={[styles.questionNumber, { color: questionColor }]}
+              >
+                Your score
+              </NormalText>
+              <MediumText style={{ fontSize: RFValue(15) }}>
+                {data.correct} of {data.totalQuestions} answered correctly
+              </MediumText>
+            </>
+          )}
+          data={formattedQuestions}
+          renderItem={({ item }) => {
+            const selectedAnswerIndex = finalAnswers.findIndex(
+              (q) => q.numberz === item.numberz
+            );
+            const selectedAnswer =
+              finalAnswers[selectedAnswerIndex]?.yourAnswer === 'Option A'
+                ? item['Option A']
+                : finalAnswers[selectedAnswerIndex]?.yourAnswer === 'Option B'
+                  ? item['Option B']
+                  : item['Option C'];
+            console.log({
+              selectedAnswer,
+              itemAnswer: item[item.answer as keyof typeof item],
+            });
+            const itemAnswer = item[item.answer as keyof typeof item];
+            return (
+              <ResultCard
+                item={item}
+                isCorrect={selectedAnswer === itemAnswer}
+                selectedAnswer={selectedAnswer}
+                correctAnswer={itemAnswer as string}
+              />
+            );
+          }}
+          contentContainerStyle={{ gap: 15, paddingBottom: 20 }}
+          showsVerticalScrollIndicator={false}
+          keyExtractor={(item, i) => item.numberz.toString() + i.toString()}
+          scrollEnabled={false}
+        />
+      </View>
+      <Stack mt={20} gap={5}>
+        <NormalButton
+          buttonText={'Download'}
+          onPress={exportViewToPDF}
+          disabled={isLoading}
+        />
+      </Stack>
     </>
   );
 };
