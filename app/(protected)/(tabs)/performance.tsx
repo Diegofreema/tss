@@ -1,11 +1,11 @@
 import { Wrapper } from '@/features/shared/components/ui/wrapper';
-import { FetchCa } from '@/features/student/components/fetch-ca';
+import { PerformanceTab } from '@/features/student/components/performance-tab';
 import React from 'react';
 
 const PerformanceScreen = () => {
   return (
-    <Wrapper style={{ flex: 1 }}>
-      <FetchCa />
+    <Wrapper style={{ flex: 1, paddingHorizontal: 0 }}>
+      <PerformanceTab />
     </Wrapper>
   );
 };

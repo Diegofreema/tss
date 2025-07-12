@@ -19,7 +19,7 @@ export const Colors = {
     wrapper: '#F5F5F5',
     title: '#000',
     card: '#fff',
-    cardBorder: '#f5f5f5',
+    cardBorder: '#CCC',
     question: colors.purple,
   },
   dark: {

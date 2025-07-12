@@ -6,6 +6,7 @@ import { NormalText } from '@/features/shared/components/typography';
 import { Stack } from '@/features/shared/components/ui/stack';
 import { useColorScheme } from '@/hooks/useColorScheme.web';
 import { Entypo } from '@expo/vector-icons';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 type Props = {
   data: string[];
@@ -26,7 +27,7 @@ export const CustomSelect = ({ data, onSelect, value, flex = 1 }: Props) => {
           backgroundColor: Colors[colorScheme ?? 'light'].background,
         }}
       >
-        <Stack direction="row" gap={5} alignItems="center">
+        <Stack direction="row" gap={5} alignItems="center" width={'100%'}>
           <NormalText style={{ flex }}>{value ?? 'Select a value'}</NormalText>
           <Entypo name="chevron-small-down" size={20} color={iconColor} />
         </Stack>
@@ -40,7 +41,9 @@ export const CustomSelect = ({ data, onSelect, value, flex = 1 }: Props) => {
               onSelect={() => onSelect(item)}
             >
               <DropdownMenu.ItemTitle>
-                <Text style={{ fontFamily: 'Inter' }}>{item}</Text>
+                <Text style={{ fontFamily: 'Inter', fontSize: RFValue(11) }}>
+                  {item}
+                </Text>
               </DropdownMenu.ItemTitle>
             </DropdownMenu.Item>
           ))}

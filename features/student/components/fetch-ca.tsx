@@ -1,4 +1,5 @@
 import { Colors } from '@/constants/Colors';
+import { MageFilter } from '@/features/shared/components/icon/filter-icon';
 import { LoadingBar } from '@/features/shared/components/loading-bar';
 import { LoadingCard } from '@/features/shared/components/loading-card';
 import { LoadingLists } from '@/features/shared/components/loading-lists';
@@ -110,6 +111,7 @@ export const FetchCa = () => {
           justifyContent="space-between"
           gap={10}
           alignItems="center"
+          style={{ alignItems: 'center' }}
         >
           <View style={[styles.inputContainer, { borderColor }]}>
             <Ionicons
@@ -127,8 +129,11 @@ export const FetchCa = () => {
               autoCapitalize="none"
             />
           </View>
-          <CustomPressable onPress={handlePresentModalPress}>
-            <Ionicons name="filter" size={24} color={iconColor} />
+          <CustomPressable
+            onPress={handlePresentModalPress}
+            style={{ marginBottom: 15 }}
+          >
+            <MageFilter size={24} color={iconColor} />
           </CustomPressable>
         </Stack>
         <RenderCAs
@@ -173,6 +178,7 @@ const styles = StyleSheet.create({
     gap: 10,
     flex: 1,
     alignItems: 'center',
+    marginBottom: 15,
   },
   container: {
     flex: 1,
