@@ -5,6 +5,7 @@ import {
   FetchAttendanceType,
   FetchCAResponseType,
   FetchCAType,
+  FetchResultSheetSuccessType,
   FetchSessionResponseType,
   FetchSessionType,
   FetchTermResponseType,
@@ -121,4 +122,28 @@ export const fetchClasses = async ({ token, regnum }: FetchSessionType) => {
     }
   );
   return data;
+};
+
+export const fetchResultSheet = async ({
+  token,
+  regnum,
+  term,
+  session,
+  classname,
+}: FetchCAType) => {
+  try {
+    const { data } = await axios.get<FetchResultSheetSuccessType>(
+      `${baseUrl}parents/result-sheet/${encodeURI(regnum)}?session=${encodeURI(
+        session
+      )}&classname=${encodeURI(classname)}&term=${encodeURI(term)}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return data;
+  } catch (error) {
+    throw new Error(`${error}`);
+  }
 };

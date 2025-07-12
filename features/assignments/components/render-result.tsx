@@ -7,12 +7,15 @@ import {
 import { FlexText } from '@/features/shared/components/flex-text';
 import { NormalButton } from '@/features/shared/components/normal-button';
 import { router } from 'expo-router';
-import { SubmitAssignmentType } from '../types';
+import { Answer, SubmitAssignmentType } from '../types';
 
 type RenderResultProps = {
   data: SubmitAssignmentType;
+  finalAnswers: Answer[];
 };
-export const RenderResult = ({ data }: RenderResultProps) => {
+export const RenderResult = ({ data, finalAnswers }: RenderResultProps) => {
+  console.log({ finalAnswers });
+
   return (
     <Card>
       <CardContent>

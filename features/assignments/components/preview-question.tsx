@@ -35,6 +35,7 @@ export const PreviewQuestion = ({ item, answers }: Props) => {
           styles.labelRequired,
           { color: isSelected ? colors.purple : colors.black },
         ]}
+        key={option}
       >
         {optionText}
       </MediumText>

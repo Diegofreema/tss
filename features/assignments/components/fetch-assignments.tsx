@@ -10,11 +10,11 @@ import { RenderAssignments } from './render-assignments';
 export const FetchAssignments = () => {
   const student = useStudent((state) => state.student);
   const { testid } = useLocalSearchParams<{ testid: string }>();
-  const { data, isError, isPending, error } = useGetAssignments({
+  const { data, isError, isPending } = useGetAssignments({
     regnum: student?.regnum!,
     testid,
   });
-  console.log({ error, isPending });
+
   const { width } = useWindowDimensions();
   if (isError) {
     throw new Error('Failed to get assignment detail');
@@ -24,7 +24,6 @@ export const FetchAssignments = () => {
       <>
         <LoadingBar />
         <Spacer size={8} />
-
         <LoadingCard height={200} width={width - 30} />
         <Spacer size={8} />
         <LoadingBar />

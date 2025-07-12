@@ -85,14 +85,14 @@ export const FetchCa = () => {
 
   if (isPending || isPendingSession || isPendingTerms || isClassPending) {
     return (
-      <>
+      <Wrapper>
         <LoadingBar />
         <Spacer size={5} />
         <LoadingLists
           horizontal={false}
           renderItem={() => <LoadingCard width={width - 30} height={200} />}
         />
-      </>
+      </Wrapper>
     );
   }
 

@@ -28,7 +28,6 @@ export const submitAssignments = async ({
   testid,
   answers,
 }: SubmitAssignmentsType) => {
-  const _answers = JSON.stringify(answers);
   console.log({ answers, testid, regnum, token });
 
   try {
@@ -37,7 +36,7 @@ export const submitAssignments = async ({
       {
         regnum,
         testid,
-        answers: _answers,
+        answers,
       },
       {
         headers: {

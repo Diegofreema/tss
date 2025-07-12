@@ -96,3 +96,63 @@ export type FetchSessionType = {
   token: string;
   regnum: string;
 };
+
+export type ResultStudentType = {
+  name: string;
+  regnum: string;
+  image: string;
+  class: string;
+  arm: string;
+  attendance: string;
+};
+export type SchoolType = {
+  name: string;
+  address: string;
+  logo: string;
+  stamp: string;
+};
+
+export type TermInfoType = {
+  session: string;
+  term: TermSingleType;
+  reopening: string;
+};
+
+export type Score = {
+  subjectid: string;
+  subjectName: string;
+  ca1: number;
+  ca2: number;
+  ca3: number;
+  exam: number;
+  total: number;
+  classAverage: number;
+};
+
+export type TermSummaryType = {
+  termTotal: number;
+  termAverage: number;
+  termGrade: string;
+  classTermTotal: number;
+  classPopulation: number;
+  classSessionAvg: number;
+  studentSessionAvg: number;
+  sessionGrade: string;
+  fees: string;
+};
+export type CommentsType = {
+  formTeacher: string;
+  headTeacher: string;
+};
+export type ResultSheetType = {
+  student: ResultStudentType;
+  school: SchoolType;
+  termInfo: TermInfoType;
+  scores: Score[];
+  termSummary: TermSummaryType;
+  comments: CommentsType;
+};
+export type FetchResultSheetSuccessType = {
+  success: true;
+  data: ResultSheetType;
+};

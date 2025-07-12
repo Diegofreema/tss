@@ -15,9 +15,11 @@ type Props = {
 export const RenderAssignments = ({ data }: Props) => {
   const { data: responseData, mutateAsync, isPending } = useSubmitAssignment();
   const [showResult, setShowResult] = useState(false);
+  const [finalAnswers, setFinalAnswers] = useState<Answer[]>([]);
   const student = useStudent((state) => state.student);
 
   const handleSubmit = async (answers: Answer[]) => {
+    setFinalAnswers(answers);
     await mutateAsync(
       {
         answers,
@@ -40,7 +42,7 @@ export const RenderAssignments = ({ data }: Props) => {
       <LoadingModal visible={isPending} />
       <Header title={data?.subjectName} />
       {showResult ? (
-        <RenderResult data={responseData?.data!} />
+        <RenderResult data={responseData?.data!} finalAnswers={finalAnswers} />
       ) : (
         <AssignmentComponent
           onSubmit={handleSubmit}

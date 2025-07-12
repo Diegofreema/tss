@@ -3,34 +3,56 @@ import { NormalText } from '@/features/shared/components/typography';
 import { Stack } from '@/features/shared/components/ui/stack';
 import { Wrapper } from '@/features/shared/components/ui/wrapper';
 import React, { useState } from 'react';
+import { View } from 'react-native';
 import { useGetClasses } from '../api/use-get-classes';
+import { useGetResultSheet } from '../api/use-get-result-sheet';
 import { useGetSession } from '../api/use-get-session';
+import { useGetTerms } from '../api/user-get-terms';
+import { useStudent } from '../store/useStudent';
+import { TermSingleType } from '../types';
 import { LoadingResultSheet } from './loading-result-sheet';
 
 export const ResultSheet = () => {
+  const student = useStudent((state) => state.student);
   const {
     data: sessionData,
     isError: isSessionError,
     isPending: isSessionPending,
   } = useGetSession();
+
   const {
     data: classData,
     isError: isClassError,
     isPending: isClassPending,
   } = useGetClasses();
   const [session, setSession] = useState(sessionData?.data[0] || '');
+  const {
+    data: terms,
+    isPending: isPendingTerms,
+    isError: isErrorTerms,
+  } = useGetTerms({ regnum: student?.regnum as string });
+  const [term, setTerm] = useState<TermSingleType>(
+    (terms?.data[0] as TermSingleType) ?? 'First Term'
+  );
   const [singleClass, setSingleClass] = useState(classData?.data[0] || '');
-  if (isSessionError || isClassError) {
+  const { isError, isPending, data } = useGetResultSheet({
+    term,
+    session,
+    classname: singleClass,
+  });
+  if (isSessionError || isClassError || isErrorTerms || isError) {
     throw new Error('Error fetching session or class');
   }
-  if (isSessionPending || isClassPending) {
+  if (isSessionPending || isClassPending || isPendingTerms || isPending) {
     return <LoadingResultSheet />;
   }
 
+  console.log({ data });
+
   return (
     <Wrapper>
-      <Stack direction="row" gap={5} alignItems="flex-start" width={'100%'}>
-        <Stack gap={5} flex={1}>
+      <View>
+        <Stack gap={5}>
           <NormalText>Academic session</NormalText>
           <CustomSelect
             data={sessionData?.data || []}
@@ -39,7 +61,7 @@ export const ResultSheet = () => {
             flex={1}
           />
         </Stack>
-        <Stack gap={5} flex={1}>
+        <Stack gap={5}>
           <NormalText>Class</NormalText>
           <CustomSelect
             data={classData?.data || []}
@@ -48,7 +70,15 @@ export const ResultSheet = () => {
             flex={1}
           />
         </Stack>
-      </Stack>
+        <Stack gap={5}>
+          <NormalText style={{ color: 'white' }}>Term</NormalText>
+          <CustomSelect
+            data={terms?.data || []}
+            onSelect={setTerm}
+            value={term}
+          />
+        </Stack>
+      </View>
     </Wrapper>
   );
 };
