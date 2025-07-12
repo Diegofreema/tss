@@ -6,6 +6,7 @@ export const colors = {
   grey: '#DEDEDE',
   black: '#000',
   placeholderGrey: '#8D8D8D',
+  red: '#FF0000',
 };
 
 export const constantStyles = StyleSheet.create({
