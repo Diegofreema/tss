@@ -88,8 +88,6 @@ export const fetchCA = async ({
   term,
   token,
 }: FetchCAType) => {
-  console.log({ classname, regnum, session, term, token });
-
   const { data } = await axios.get<FetchCAResponseType>(
     `${baseUrl}parents/student/performance/${encodeURI(regnum)}?session=${encodeURI(session)}&classname=${encodeURI(classname)}&term=${encodeURI(term)}`,
 

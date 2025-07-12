@@ -1,6 +1,13 @@
+import { Colors } from '@/constants/Colors';
 import { NormalButton } from '@/features/shared/components/normal-button';
+import {
+  MediumText,
+  NormalText,
+} from '@/features/shared/components/typography';
 import { Stack } from '@/features/shared/components/ui/stack';
-import { FlatList, View } from 'react-native';
+import { useColorScheme } from '@/hooks/useColorScheme.web';
+import { FlatList, StyleSheet, View } from 'react-native';
+import { RFValue } from 'react-native-responsive-fontsize';
 import { Answer, QuestionType } from '../types';
 import { PreviewQuestion } from './preview-question';
 
@@ -16,9 +23,24 @@ export const PreviewAssignment = ({
   questions,
   answers,
 }: Props) => {
+  const colorScheme = useColorScheme() ?? 'light';
+  const questionColor = Colors[colorScheme].question;
+  const answered = answers.length;
   return (
     <View>
       <FlatList
+        ListHeaderComponent={() => (
+          <>
+            <NormalText
+              style={[styles.questionNumber, { color: questionColor }]}
+            >
+              Answered {answered} of {questions.length}
+            </NormalText>
+            <MediumText style={{ fontSize: RFValue(15) }}>
+              Review Assignment before submission
+            </MediumText>
+          </>
+        )}
         data={questions}
         renderItem={({ item }) => (
           <PreviewQuestion item={item} answers={answers} />
@@ -26,16 +48,26 @@ export const PreviewAssignment = ({
         contentContainerStyle={{ gap: 15 }}
         showsVerticalScrollIndicator={false}
         ListFooterComponent={() => (
-          <Stack mt={20}>
-            <Stack direction="row" justifyContent="space-between" gap={10}>
-              <NormalButton buttonText="Retake" onPress={retake} />
-              <NormalButton buttonText={'Submit'} onPress={submit} />
-            </Stack>
+          <Stack mt={20} gap={5}>
+            <NormalButton buttonText={'Submit'} onPress={submit} />
+            <NormalButton
+              buttonText="Retake Assignment"
+              style={{ backgroundColor: 'transparent' }}
+              textStyle={{ color: questionColor }}
+              onPress={retake}
+            />
           </Stack>
         )}
-        keyExtractor={(item) => item.numberz.toString()}
+        keyExtractor={(item, i) => item.numberz.toString() + i.toString()}
         scrollEnabled={false}
       />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  questionNumber: {
+    fontSize: RFValue(11),
+    marginTop: 10,
+  },
+});

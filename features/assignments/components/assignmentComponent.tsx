@@ -142,7 +142,7 @@ export const AssignmentComponent = ({
               />
 
               <NormalButton
-                buttonText={isLastQuestion ? 'Preview' : 'Next'}
+                buttonText={isLastQuestion ? 'Review' : 'Next'}
                 onPress={handleNext}
               />
             </Stack>

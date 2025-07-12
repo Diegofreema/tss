@@ -1,5 +1,6 @@
+import { LoadingBar } from '@/features/shared/components/loading-bar';
 import { LoadingCard } from '@/features/shared/components/loading-card';
-import { LoadingLists } from '@/features/shared/components/loading-lists';
+import { Spacer } from '@/features/shared/components/spacer';
 import { useStudent } from '@/features/student/store/useStudent';
 import { useLocalSearchParams } from 'expo-router';
 import { useWindowDimensions } from 'react-native';
@@ -13,20 +14,23 @@ export const FetchAssignments = () => {
     regnum: student?.regnum!,
     testid,
   });
-  console.log({ error });
+  console.log({ error, isPending });
   const { width } = useWindowDimensions();
   if (isError) {
     throw new Error('Failed to get assignment detail');
   }
   if (isPending) {
     return (
-      <LoadingLists
-        horizontal={false}
-        renderItem={() => <LoadingCard height={200} width={width - 30} />}
-      />
+      <>
+        <LoadingBar />
+        <Spacer size={8} />
+
+        <LoadingCard height={200} width={width - 30} />
+        <Spacer size={8} />
+        <LoadingBar />
+      </>
     );
   }
 
-  // return null;
   return <RenderAssignments data={data?.data!} />;
 };
