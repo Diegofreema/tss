@@ -48,16 +48,6 @@ export const ResultSheet = () => {
     return <LoadingResultSheet />;
   }
 
-  console.log({
-    comment: data.data.comments,
-    school: data.data.school,
-    student: data.data.student,
-    termInfo: data.data.termInfo,
-    scores: data.data.scores,
-    termSummary: data.data.termSummary,
-  });
-  console.log(JSON.stringify(data.data, null, 2));
-
   return (
     <Wrapper>
       <ScrollView

@@ -125,3 +125,39 @@ export const savePDFToDevice = async (uri: string, filename: string) => {
     Alert.alert('Error', 'Failed to save PDF. Please try again.');
   }
 };
+
+export const getGrade = (grade: number): string => {
+  if (grade >= 75) {
+    return 'A';
+  }
+  if (grade >= 70) {
+    return 'B';
+  }
+  if (grade >= 50) {
+    return 'C';
+  }
+  if (grade >= 45) {
+    return 'D';
+  }
+  if (grade >= 40) {
+    return 'E';
+  }
+  return 'NI';
+};
+
+export const getLetterGrade = (grade: string): string => {
+  switch (grade) {
+    case 'A':
+      return 'Excellent';
+    case 'B':
+      return 'V. Good';
+    case 'C':
+      return 'Good';
+    case 'D':
+      return 'Average';
+    case 'E':
+      return 'Pass';
+    default:
+      return 'NI';
+  }
+};

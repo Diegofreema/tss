@@ -22,7 +22,6 @@ import { Answer, QuestionType, SubmitAssignmentType } from '../types';
 import { FlexText } from '@/features/shared/components/flex-text';
 import { toast } from '@/features/shared/utils';
 import { savePDFToDevice } from '@/features/student/utils';
-import { router } from 'expo-router';
 import { useRef, useState } from 'react';
 import { captureRef } from 'react-native-view-shot';
 type RenderResultProps = {
@@ -67,29 +66,29 @@ export const RenderResult = ({
 
       // Convert image to PDF
       const htmlContent = `
-          <html>
-            <head>
-              <meta charset="utf-8">
-              <style>
-                body {
-                  margin: 0;
-                  padding: 20px;
-                  display: flex;
-                  justify-content: center;
-                  align-items: center;
-                  min-height: 100vh;
-                }
-                img {
-                  max-width: 100%;
-                  height: auto;
-                }
-              </style>
-            </head>
-            <body>
-              <img src="${imageUri}" alt="Captured Content" />
-            </body>
-          </html>
-        `;
+              <html>
+                <head>
+                  <meta charset="utf-8">
+                  <style>
+                    body {
+                      margin: 0;
+                      padding: 20px;
+                      display: flex;
+                      justify-content: center;
+                      align-items: center;
+                      min-height: 100vh;
+                    }
+                    img {
+                      max-width: 100%;
+                      height: auto;
+                    }
+                  </style>
+                </head>
+                <body>
+                  <img src="${imageUri}" alt="Captured Content" />
+                </body>
+              </html>
+            `;
 
       const { uri } = await Print.printToFileAsync({
         html: htmlContent,
@@ -100,7 +99,6 @@ export const RenderResult = ({
 
       await savePDFToDevice(uri, 'assignment.pdf');
       toast('Downloaded successfully', 'success');
-      router.push('/assignments');
     } catch (error) {
       console.error('Error exporting view to PDF:', error);
       Alert.alert('Error', 'Failed to export view as PDF. Please try again.');

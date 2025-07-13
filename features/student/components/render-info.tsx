@@ -1,4 +1,5 @@
-import { Text, View } from 'react-native';
+import { FlexText } from '@/features/shared/components/flex-text';
+import { Stack } from '@/features/shared/components/ui/stack';
 import { TermInfoType } from '../types';
 
 type Props = {
@@ -7,8 +8,10 @@ type Props = {
 
 export const RenderInfo = ({ termInfo }: Props) => {
   return (
-    <View>
-      <Text> render-info</Text>
-    </View>
+    <Stack gap={10}>
+      <FlexText leftText="Term" rightText={termInfo.term} />
+      <FlexText leftText="Session" rightText={termInfo.session} />
+      <FlexText leftText="Reopening date" rightText={termInfo.reopening} />
+    </Stack>
   );
 };
