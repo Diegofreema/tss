@@ -90,7 +90,7 @@ export const AssignmentsCarousel = () => {
         ref={ref}
         width={width - 30}
         height={width / 2}
-        renderItem={({ item }) => <RenderSummary item={item} />}
+        renderItem={({ item }) => <RenderSummary item={item} navigate={true} />}
         onProgressChange={progress}
         autoPlay={data.data.length > 1}
         autoPlayReverse

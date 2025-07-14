@@ -92,6 +92,7 @@ const styles = StyleSheet.create({
 
   content: {
     flexGrow: 1,
+    backgroundColor: 'transparent',
   },
   footer: {
     borderTopWidth: 1,

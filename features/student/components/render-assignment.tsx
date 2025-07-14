@@ -14,9 +14,15 @@ type Props = {
   data: SummaryType[];
   refreshing: boolean;
   onRefresh: () => void;
+  navigate?: boolean;
 };
 const { width } = Dimensions.get('window');
-export const RenderAssignments = ({ data, onRefresh, refreshing }: Props) => {
+export const RenderAssignments = ({
+  data,
+  onRefresh,
+  refreshing,
+  navigate = true,
+}: Props) => {
   const student = useStudent((state) => state.student);
   const { data: studentData, isPending, isError } = useGetStudent();
   if (isError) {
@@ -35,7 +41,9 @@ export const RenderAssignments = ({ data, onRefresh, refreshing }: Props) => {
       style={{ flex: 1 }}
       keyExtractor={(item, i) => item.testid}
       contentContainerStyle={{ gap: 20, flexGrow: 1 }}
-      renderItem={({ item }) => <RenderSummary item={item} />}
+      renderItem={({ item }) => (
+        <RenderSummary item={item} navigate={navigate} />
+      )}
       showsHorizontalScrollIndicator={false}
       showsVerticalScrollIndicator={false}
       refreshing={refreshing}

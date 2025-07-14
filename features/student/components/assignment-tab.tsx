@@ -1,6 +1,8 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Colors } from '@/constants/Colors';
 import { MediumText } from '@/features/shared/components/typography';
 import { colors } from '@/features/shared/constants';
+import { useColorScheme } from '@/hooks/useColorScheme.web';
 import { cn } from '@/lib/utils';
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
@@ -11,7 +13,9 @@ export function AssignmentTabs() {
   const [value, setValue] = React.useState<'pending' | 'completed' | 'elapsed'>(
     'pending'
   );
-  console.log({ value });
+  const colorScheme = useColorScheme();
+  const purpleColor = Colors[colorScheme ?? 'light'].question;
+  const darkColor = Colors[colorScheme ?? 'light'].tabIconDefault;
 
   return (
     <View className="flex-1 justify-center">
@@ -33,7 +37,7 @@ export function AssignmentTabs() {
             value="pending"
             style={{
               borderBottomWidth: value === 'pending' ? 1 : 0,
-              borderColor: colors.purple,
+              borderColor: purpleColor,
               marginBottom: -5,
             }}
             className="w-1/3"
@@ -41,7 +45,7 @@ export function AssignmentTabs() {
             <MediumText
               style={[
                 styles.container,
-                { color: value === 'pending' ? colors.purple : colors.black },
+                { color: value === 'pending' ? purpleColor : darkColor },
               ]}
               className={cn()}
             >
@@ -53,13 +57,13 @@ export function AssignmentTabs() {
             className="w-1/3"
             style={{
               borderBottomWidth: value === 'completed' ? 1 : 0,
-              borderColor: colors.purple,
+              borderColor: purpleColor,
             }}
           >
             <MediumText
               style={[
                 styles.container,
-                { color: value === 'completed' ? colors.purple : colors.black },
+                { color: value === 'completed' ? purpleColor : darkColor },
               ]}
             >
               Completed
@@ -70,13 +74,13 @@ export function AssignmentTabs() {
             className="w-1/3"
             style={{
               borderBottomWidth: value === 'elapsed' ? 1 : 0,
-              borderColor: colors.purple,
+              borderColor: purpleColor,
             }}
           >
             <MediumText
               style={[
                 styles.container,
-                { color: value === 'elapsed' ? colors.purple : colors.black },
+                { color: value === 'elapsed' ? purpleColor : darkColor },
               ]}
             >
               Elapsed
@@ -85,13 +89,13 @@ export function AssignmentTabs() {
         </TabsList>
         <View className="flex-1 px-[15px]">
           <TabsContent value="pending" className="flex-1">
-            <FetchAssignments status={value} />
+            <FetchAssignments status={value} navigate />
           </TabsContent>
           <TabsContent value="completed" className="flex-1">
-            <FetchAssignments status={value} />
+            <FetchAssignments status={value} navigate={false} />
           </TabsContent>
           <TabsContent value="elapsed" className="flex-1">
-            <FetchAssignments status={value} />
+            <FetchAssignments status={value} navigate={false} />
           </TabsContent>
         </View>
       </Tabs>

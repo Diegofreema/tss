@@ -22,24 +22,31 @@ import { SummaryType } from '../types';
 
 type Props = {
   item: SummaryType;
+  navigate?: boolean;
 };
 
-export const RenderSummary = ({ item }: Props) => {
+export const RenderSummary = ({ item, navigate }: Props) => {
   const monthDay = format(item.date1, 'MMM');
   const day = format(item.date1, 'd');
 
   const colorScheme = useColorScheme();
   const iconColor = Colors[colorScheme ?? 'light'].icon;
   const onPress = () => {
+    if (!navigate) return;
     router.push(`/assignment-detail?testid=${item.testid}`);
   };
   return (
     <CustomPressable onPress={onPress}>
-      <Card>
-        <CardContent>
+      <Card style={{ backgroundColor: 'transparent' }}>
+        <CardContent style={{ backgroundColor: 'transparent' }}>
           <CardHeader>
-            <Stack direction="row" gap={10} alignItems="center">
-              <Stack>
+            <Stack
+              direction="row"
+              gap={10}
+              alignItems="center"
+              backgroundColor="transparent"
+            >
+              <Stack backgroundColor="transparent">
                 <NormalText>{monthDay}</NormalText>
                 <MediumText style={styles.day}>{day}</MediumText>
               </Stack>

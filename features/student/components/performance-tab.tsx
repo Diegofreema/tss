@@ -1,6 +1,8 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Colors } from '@/constants/Colors';
 import { MediumText } from '@/features/shared/components/typography';
 import { colors } from '@/features/shared/constants';
+import { useColorScheme } from '@/hooks/useColorScheme.web';
 import { cn } from '@/lib/utils';
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
@@ -12,7 +14,9 @@ export function PerformanceTab() {
   const [value, setValue] = React.useState<'assessment' | 'result'>(
     'assessment'
   );
-
+  const colorScheme = useColorScheme();
+  const purpleColor = Colors[colorScheme ?? 'light'].question;
+  const darkColor = Colors[colorScheme ?? 'light'].tabIconDefault;
   return (
     <View className="flex-1 justify-center">
       <Tabs
@@ -33,7 +37,7 @@ export function PerformanceTab() {
             value="assessment"
             style={{
               borderBottomWidth: value === 'assessment' ? 1 : 0,
-              borderColor: colors.purple,
+              borderColor: purpleColor,
               marginBottom: -5,
             }}
             className="w-1/2"
@@ -42,7 +46,7 @@ export function PerformanceTab() {
               style={[
                 styles.container,
                 {
-                  color: value === 'assessment' ? colors.purple : colors.black,
+                  color: value === 'assessment' ? purpleColor : darkColor,
                 },
               ]}
               className={cn()}
@@ -56,13 +60,13 @@ export function PerformanceTab() {
             className="w-1/2"
             style={{
               borderBottomWidth: value === 'result' ? 1 : 0,
-              borderColor: colors.purple,
+              borderColor: purpleColor,
             }}
           >
             <MediumText
               style={[
                 styles.container,
-                { color: value === 'result' ? colors.purple : colors.black },
+                { color: value === 'result' ? purpleColor : darkColor },
               ]}
             >
               Result Sheet

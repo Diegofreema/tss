@@ -9,9 +9,10 @@ import { RenderAssignments } from './render-assignment';
 
 type Props = {
   status: 'pending' | 'completed' | 'elapsed';
+  navigate?: boolean;
 };
 
-export const FetchAssignments = ({ status }: Props) => {
+export const FetchAssignments = ({ status, navigate }: Props) => {
   const student = useStudent((state) => state.student);
   const { data, isPending, isError, refetch, isRefetching, isRefetchError } =
     useGetTest({
@@ -40,6 +41,7 @@ export const FetchAssignments = ({ status }: Props) => {
         data={dataToRender}
         onRefresh={refetch}
         refreshing={isRefetching}
+        navigate={navigate}
       />
     </Stack>
   );
