@@ -1,5 +1,5 @@
+import { NormalText } from '@/features/shared/components/typography';
 import { Stack } from '@/features/shared/components/ui/stack';
-import { Text } from 'react-native';
 import { CommentsType } from '../types';
 
 type Props = {
@@ -8,8 +8,8 @@ type Props = {
 export const RenderComment = ({ comments }: Props) => {
   return (
     <Stack>
-      <Text>Form Teacher: {comments.formTeacher || 'N/A'}</Text>
-      <Text>Head Teacher: {comments.headTeacher}</Text>
+      <NormalText>Form Teacher: {comments.formTeacher || 'N/A'}</NormalText>
+      <NormalText>Head Teacher: {comments.headTeacher}</NormalText>
     </Stack>
   );
 };

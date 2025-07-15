@@ -28,12 +28,15 @@ type Props = {
 export const RenderSummary = ({ item, navigate }: Props) => {
   const monthDay = format(item.date1, 'MMM');
   const day = format(item.date1, 'd');
+  console.log({ item });
 
   const colorScheme = useColorScheme();
   const iconColor = Colors[colorScheme ?? 'light'].icon;
   const onPress = () => {
     if (!navigate) return;
-    router.push(`/assignment-detail?testid=${item.testid}`);
+    router.push(
+      `/assignment-detail?testid=${item.testid}&date1=${format(item.date1, 'PP')}&date2=${format(item.date2, 'PP')}`
+    );
   };
   return (
     <CustomPressable onPress={onPress}>
@@ -72,7 +75,7 @@ export const RenderSummary = ({ item, navigate }: Props) => {
               <MediumText
                 style={{ color: colors.white, fontSize: RFValue(15) }}
               >
-                {format(item.date2, 'PPP')}
+                {format(item.date2, 'PPP HH:mm')}
               </MediumText>
             </Stack>
           </CardFooter>

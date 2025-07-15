@@ -106,13 +106,14 @@ export const RenderAttendance = ({
     textMonthFontSize: 16,
     textDayHeaderFontSize: 13,
   };
+  const uniqueArray = [...new Set(data?.map((i) => i.term) ?? [])];
   return (
     <Stack backgroundColor="transparent" gap={10}>
       <Stack direction="row" justifyContent="space-between" alignItems="center">
         <Title title="Attendance" />
         <CustomSelect
           value={term}
-          data={data.map((item) => item.term)}
+          data={uniqueArray}
           onSelect={(value) => setTerm(value as TermSingleType)}
           flex={0}
         />

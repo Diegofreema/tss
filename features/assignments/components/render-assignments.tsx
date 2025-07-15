@@ -1,6 +1,8 @@
+import { FlexText } from '@/features/shared/components/flex-text';
 import { LoadingModal } from '@/features/shared/components/modal/loading-modal';
 import { Header } from '@/features/shared/components/ui/header';
 import { useStudent } from '@/features/student/store/useStudent';
+import { useLocalSearchParams } from 'expo-router';
 import { useState } from 'react';
 import { ScrollView } from 'react-native';
 import { useSubmitAssignment } from '../api/use-submit-assignment';
@@ -14,6 +16,10 @@ type Props = {
 
 export const RenderAssignments = ({ data }: Props) => {
   const { data: responseData, mutateAsync, isPending } = useSubmitAssignment();
+  const { date1, date2 } = useLocalSearchParams<{
+    date1: string;
+    date2: string;
+  }>();
   const [showResult, setShowResult] = useState(false);
   const [finalAnswers, setFinalAnswers] = useState<Answer[]>([]);
   const [questions] = useState<QuestionType[]>(data.questions);
@@ -43,6 +49,8 @@ export const RenderAssignments = ({ data }: Props) => {
     >
       <LoadingModal visible={isPending} />
       <Header title={data?.subjectName} />
+      <FlexText leftText="Date given" rightText={date1} />
+      <FlexText leftText="Date to submit" rightText={date2} />
       {showResult ? (
         <RenderResult
           data={responseData?.data!}

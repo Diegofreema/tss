@@ -20,6 +20,7 @@ export const LoadingLists = ({
       renderItem={renderItem}
       contentContainerStyle={{ gap: 20 }}
       horizontal={horizontal}
+      showsVerticalScrollIndicator={false}
     />
   );
 };

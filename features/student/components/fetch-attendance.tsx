@@ -15,14 +15,14 @@ export const FetchAttendance = () => {
     isPending: isPendingTerms,
     isError: isErrorTerms,
   } = useGetTerms({ regnum: student?.regnum as string });
-
-  const { data, isPending, isError } = useGetAttendance({
-    regnum: student?.regnum!,
-    term: terms?.data[0]!,
-  });
   const [term, setTerm] = React.useState<TermSingleType>(
     (terms?.data[0] as TermSingleType) || 'First Term'
   );
+  const { data, isPending, isError } = useGetAttendance({
+    regnum: student?.regnum!,
+    term,
+  });
+
   const { width } = useWindowDimensions();
   const cardWidth = width - 30; // Assuming a margin of 20 on each side
   if (isError || isErrorTerms) {

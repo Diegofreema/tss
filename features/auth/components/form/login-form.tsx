@@ -29,6 +29,8 @@ export const LoginForm = () => {
     resolver: zodResolver(loginSchema),
   });
   const onSubmit = async (values: z.infer<typeof loginSchema>) => {
+    console.log(values);
+
     await mutateAsync(values, {
       onSuccess: () => {
         reset();

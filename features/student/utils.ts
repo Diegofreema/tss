@@ -18,8 +18,10 @@ export const requestPermissions = async () => {
   return true;
 };
 
-export const exportHTMLToPDF = async () => {
+export const exportHTMLToPDF = async (setIsLoading: (loading: boolean) => void, toast: (message: string, type: string) => void) => {
   try {
+    setIsLoading(true);
+
     const htmlContent = `
         <html>
           <head>
@@ -70,10 +72,12 @@ export const exportHTMLToPDF = async () => {
     });
 
     await savePDFToDevice(uri, 'sample-document.pdf');
+    toast('PDF saved to device', 'success');
   } catch (error) {
     console.error('Error generating PDF:', error);
-    Alert.alert('Error', 'Failed to generate PDF. Please try again.');
+    toast('Error, Failed to generate PDF. Please try again.', 'error');
   } finally {
+    setIsLoading(false);
   }
 };
 
@@ -91,34 +95,45 @@ export const savePDFToDevice = async (uri: string, filename: string) => {
         UTI: 'com.adobe.pdf',
       });
     } else {
-      // Android: Save to downloads folder
-      const downloadsPath = `${FileSystem.documentDirectory}Downloads/`;
-
-      // Ensure downloads directory exists
-      const dirInfo = await FileSystem.getInfoAsync(downloadsPath);
-      if (!dirInfo.exists) {
-        await FileSystem.makeDirectoryAsync(downloadsPath, {
-          intermediates: true,
+      // Android: Use Storage Access Framework
+      const permissions = await FileSystem.StorageAccessFramework.requestDirectoryPermissionsAsync();
+      
+      if (permissions.granted) {
+        // Read the file as base64
+        const base64Data = await FileSystem.readAsStringAsync(uri, { 
+          encoding: FileSystem.EncodingType.Base64 
+        });
+        
+        // Create and write to the file in the selected directory
+        await FileSystem.StorageAccessFramework.createFileAsync(
+          permissions.directoryUri,
+          filename,
+          'application/pdf'
+        )
+        .then(async (newUri) => {
+          await FileSystem.writeAsStringAsync(newUri, base64Data, { 
+            encoding: FileSystem.EncodingType.Base64 
+          });
+          
+          Alert.alert('Success', `PDF saved as ${filename}`, [
+            {
+              text: 'Share',
+              onPress: () => Sharing.shareAsync(uri),
+            },
+            { text: 'OK' },
+          ]);
+        })
+        .catch((error) => {
+          console.error('Error creating file:', error);
+          Alert.alert('Error', 'Failed to save PDF. Please try again.');
+        });
+      } else {
+        // Fallback to sharing if permissions not granted
+        await Sharing.shareAsync(uri, {
+          mimeType: 'application/pdf',
+          dialogTitle: 'Save PDF',
         });
       }
-
-      const localUri = `${downloadsPath}${filename}`;
-      await FileSystem.copyAsync({
-        from: uri,
-        to: localUri,
-      });
-
-      // Save to media library
-      const asset = await MediaLibrary.createAssetAsync(localUri);
-      await MediaLibrary.createAlbumAsync('PDFs', asset, false);
-
-      Alert.alert('Success', `PDF saved to Downloads folder as ${filename}`, [
-        {
-          text: 'Share',
-          onPress: () => Sharing.shareAsync(localUri),
-        },
-        { text: 'OK' },
-      ]);
     }
   } catch (error) {
     console.error('Error saving PDF:', error);
